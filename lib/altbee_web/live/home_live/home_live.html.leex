@@ -1,0 +1,5 @@
+<ul class="pt-3 mx-4 grid grid-cols-1 gap-3 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <%= for goal <- @goals do %>
+    <%= live_component @socket, GoalComponent, id: goal["id"], goal: goal %>
+  <% end %>
+</ul>
