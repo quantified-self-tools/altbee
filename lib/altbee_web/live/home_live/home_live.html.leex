@@ -14,7 +14,7 @@
 
   <ul class="my-6 mx-4 grid grid-cols-1 gap-3 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     <%= for goal <- @filtered_goals do %>
-      <%= live_component @socket, GoalComponent, id: goal["id"], goal: goal %>
+      <%= live_component @socket, GoalComponent, id: goal["id"], goal: goal, user: @user %>
     <% end %>
   </ul>
   <%= no_goals_shown_message(assigns) %>

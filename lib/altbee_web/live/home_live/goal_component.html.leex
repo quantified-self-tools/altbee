@@ -1,6 +1,6 @@
 <li class="col-span-1 flex shadow rounded-md" id="goal-<%= @goal["id"] %>">
   <%= live_component @socket, GoalGraphComponent, safebuf: @goal["safebuf"], graph: @goal["svg_url"] %>
-  <div class="flex-1 flex items-center justify-between border-t border-r border-b border-cool-gray-300 bg-white rounded-r-md truncate">
+  <div class="flex-1 flex items-center justify-between border-t border-r border-b border-cool-gray-300 bg-white rounded-r-md">
     <a href="#" class="flex-1 px-4 py-2 text-sm leading-5 truncate focus:outline-none group">
       <span class="text-gray-900 font-medium group-hover:text-gray-600 transition ease-in-out duration-150 group-focus:underline"><%= @goal["slug"] %></span>
 
@@ -13,6 +13,6 @@
       <%= @goal["limsum"] %>
       </p>
     </a>
-    <%= live_component @socket, GoalDropdownComponent, goal: @goal %>
+    <%= live_component @socket, GoalDropdownComponent, goal: @goal, user: @user %>
   </div>
 </li>
