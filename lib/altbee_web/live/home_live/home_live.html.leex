@@ -1,5 +1,21 @@
-<ul class="pt-3 mx-4 grid grid-cols-1 gap-3 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-  <%= for goal <- @goals do %>
-    <%= live_component @socket, GoalComponent, id: goal["id"], goal: goal %>
-  <% end %>
-</ul>
+<article class="px-4 sm:px-6 py-4">
+  <h1 class="text-3xl font-bold leading-tight text-gray-900">
+    Your Goals
+  </h1>
+  <form class="sm:w-1/2 ml-auto relative rounded-md shadow-sm mt-2"
+      phx-change="filter-changed"
+      data-prevent-submit>
+    <label for="filter" class="sr-only">Filter</label>
+    <input type="search"
+          class="form-input block w-full sm:text-sm sm:leading-5"
+           name="filter"
+           placeholder="Filter…">
+  </form>
+
+  <ul class="my-6 mx-4 grid grid-cols-1 gap-3 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <%= for goal <- @filtered_goals do %>
+      <%= live_component @socket, GoalComponent, id: goal["id"], goal: goal %>
+    <% end %>
+  </ul>
+  <%= no_goals_shown_message(assigns) %>
+</article>
