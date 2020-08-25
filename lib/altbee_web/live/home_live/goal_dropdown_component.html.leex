@@ -1,4 +1,4 @@
-<div class="relative inline-block text-left flex-shrink-0 pr-2"
+<div class="inline-block text-left flex-shrink-0 pr-2"
      x-data="{open: false}"
      @click.away="open = false">
   <div>
@@ -9,7 +9,7 @@
     </button>
   </div>
 
-  <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg z-10"
+  <div class="origin-top-right absolute mt-1 w-48 rounded-md shadow-lg z-10 transform -translate-x-32"
        :aria-expanded="open"
        x-show="open"
        x-transition:enter="transition ease-out duration-100"
