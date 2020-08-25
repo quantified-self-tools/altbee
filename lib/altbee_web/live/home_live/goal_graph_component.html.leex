@@ -1,3 +1,29 @@
-<div class="flex-shrink-0 flex items-center rounded-l-md w-20 <%= goal_color_bg_class(goal_color(@safebuf)) %>">
-  <img class="bg-white" src="<%= @graph %>" alt="">
+<div class="flex-shrink-0 flex items-center rounded-l-md w-20 <%= goal_color_bg_class(goal_color(@safebuf)) %>"
+     x-data="{expanded: false}">
+  <button @click="expanded = !expanded" class="w-full h-full">
+    <img class="bg-white" src="<%= @graph %>" alt="">
+  </button>
+  <template x-if="expanded">
+    <div class="absolute w-screen h-screen flex justify-center items-center inset-0 overflow-hidden z-10 bg-cool-gray-400 bg-opacity-75 transition-opacity"
+      @click.self="expanded = false"
+      x-transition:enter="ease-in-out duration-150"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="ease-in-out duration-150"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0">
+    <div class="h-7 flex items-center">
+      <button
+        aria-label="Close"
+        class="text-cool-gray-500 hover:text-cool-gray-600 transition ease-in-out duration-150 absolute top-0 right-0 mt-6 mr-6 bg-cool-gray-50 rounded-full p-2"
+        @click="expanded = false">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
+        </button>
+      </div>
+      <div class="w-full max-w-2xl bg-white mx-1 sm:mx-6">
+        <h2 class="w-full text-center text-2xl font-semibold py-3"><%= @slug %></h2>
+        <img src="<%= @graph %>" alt="">
+      </div>
+    </div>
+  </template>
 </div>
