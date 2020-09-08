@@ -18,6 +18,7 @@ defmodule AltbeeWeb.Router do
     pipe_through :browser
 
     live "/", HomeLive, :index
+    live "/goal/:slug", GoalLive, :show
     get "/login", UserController, :login
   end
 

@@ -12,17 +12,18 @@
       x-transition:leave="ease-in-out duration-150"
       x-transition:leave-start="opacity-100"
       x-transition:leave-end="opacity-0">
-    <div class="h-7 flex items-center">
-      <button
-        aria-label="Close"
-        class="text-cool-gray-500 hover:text-cool-gray-600 transition ease-in-out duration-150 absolute top-0 right-0 mt-6 mr-6 bg-cool-gray-50 rounded-full p-2"
-        @click="expanded = false">
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
+      <div class="h-7 pt-2 flex items-center">
+        <button
+          aria-label="Close"
+          class="text-cool-gray-500 hover:text-cool-gray-600 transition ease-in-out duration-150 absolute top-0 right-0 mt-6 mr-6 bg-cool-gray-50 rounded-full p-2"
+          @click="expanded = false">
+         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
         </button>
       </div>
+
       <div class="w-full max-w-2xl bg-white mx-1 sm:mx-6">
         <h2 class="w-full text-center text-2xl font-semibold py-3"><%= @slug %></h2>
-        <img src="<%= @graph %>" alt="">
+        <img class="px-3 pb-3" src="<%= @graph %>" alt="Graph for <%= @slug %>">
       </div>
     </div>
   </template>
