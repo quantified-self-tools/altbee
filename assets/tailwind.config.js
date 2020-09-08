@@ -20,7 +20,8 @@ module.exports = {
     require('@tailwindcss/ui')
   ],
   future: {
-    removeDeprecatedGapUtilities: true
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true
   },
   experimental: 'all'
 }
