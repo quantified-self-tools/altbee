@@ -48,7 +48,8 @@ defmodule Altbee.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:cachex, "~> 3.3"},
       {:httpoison, "~> 1.7"},
-      {:timex, "~> 3.6.2"}
+      {:timex, "~> 3.6.2"},
+      {:distillery, "~> 2.1"}
     ]
   end
 

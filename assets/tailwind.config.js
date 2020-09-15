@@ -1,9 +1,11 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: {
     content: [
       '../lib/**/*.ex',
       '../lib/**/*.eex',
+      '../lib/**/*.leex',
       './js/**/*.js'
     ]
   },
