@@ -18,7 +18,8 @@ defmodule AltbeeWeb.HomeLive do
 
         socket
         |> assign(:goals, goals_from_cache)
-        |> recalculate_filters([])
+        |> assign(:filters, [])
+        |> recalculate_filters()
         |> assign(:page_title, "Goals")
       end)
 
@@ -57,12 +58,13 @@ defmodule AltbeeWeb.HomeLive do
 
     socket =
       socket
-      |> recalculate_filters(filters)
+      |> assign(:filters, filters)
+      |> recalculate_filters()
 
     {:noreply, socket}
   end
 
-  defp recalculate_filters(%{assigns: %{goals: goals}} = socket, filters) do
+  defp recalculate_filters(%{assigns: %{goals: goals, filters: filters}} = socket) do
     assign(socket, :filtered_goals, filter_goals(goals, filters))
   end
 
@@ -118,7 +120,7 @@ defmodule AltbeeWeb.HomeLive do
     socket =
       socket
       |> assign(:goals, goals)
-      |> recalculate_filters([])
+      |> recalculate_filters()
 
     {:noreply, socket}
   end
