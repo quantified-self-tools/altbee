@@ -5,18 +5,16 @@ defmodule Altbee.Application do
 
   use Application
 
+  import Cachex.Spec, only: [expiration: 1]
+
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
       Altbee.Repo,
-      # Start the Telemetry supervisor
       AltbeeWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Altbee.PubSub},
-      # Start the Endpoint (http/https)
-      AltbeeWeb.Endpoint
-      # Start a worker by calling: Altbee.Worker.start_link(arg)
-      # {Altbee.Worker, arg}
+      AltbeeWeb.Endpoint,
+      {Cachex,
+       name: :goals_cache, expiration: expiration(default: :timer.hours(25)), limit: 2_000}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

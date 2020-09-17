@@ -1,3 +1,15 @@
+<%= if is_nil(@goal) do %>
+  <div class="w-full h-screen flex justify-around items-center">
+    <div class="sk-chase">
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </div>
+  </div>
+<% else %>
 <article class="px-4 sm:px-6 py-4">
   <header class="flex justify-between w-100 items-center">
     <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition ease-in-out duration-150", "aria-label": "Back" do %>
@@ -9,13 +21,11 @@
       <h2 class="text-sm mt-1 sm:mt-0 sm:mb-1 sm:ml-3 text-cool-gray-500"><%= @goal["limsumdate"] %></h2>
     </div>
 
-    <span class="flex rounded-md shadow-sm">
-      <button
-        phx-click="refresh"
-        class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition ease-in-out duration-150">
-        <svg viewBox="0 0 20 20" fill="currentColor" class="refresh w-6 h-6"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
-      </button>
-    </span>
+    <button
+      phx-click="refresh"
+      class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition ease-in-out duration-150">
+      <svg viewBox="0 0 20 20" fill="currentColor" class="refresh w-6 h-6"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+    </button>
   </header>
 
   <div class="grid grid-cols-6 sm:mx-4 lg:mx-6 gap-4 sm:gap-6 my-5">
@@ -103,3 +113,4 @@
     </form>
   </div>
 </article>
+<% end %>

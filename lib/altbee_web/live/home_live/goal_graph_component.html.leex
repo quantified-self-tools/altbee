@@ -4,7 +4,7 @@
     <img class="bg-white" src="<%= @graph %>" alt="">
   </button>
   <template x-if="expanded">
-    <div class="absolute w-screen h-screen flex justify-center items-center inset-0 overflow-hidden z-10 bg-cool-gray-400 bg-opacity-75 transition-opacity"
+    <div class="fixed w-screen h-screen flex justify-center items-center inset-0 overflow-hidden z-10 bg-cool-gray-400 bg-opacity-75 transition-opacity"
       @click.self="expanded = false"
       x-transition:enter="ease-in-out duration-150"
       x-transition:enter-start="opacity-0"
@@ -21,7 +21,7 @@
         </button>
       </div>
 
-      <div class="w-full max-w-2xl bg-white mx-1 sm:mx-6">
+      <div class="w-full max-w-2xl max-h-screen overflow-y-auto overscroll-contain bg-white mx-1 sm:mx-6">
         <h2 class="w-full text-center text-2xl font-semibold py-3"><%= @slug %></h2>
         <img class="px-3 pb-3" src="<%= @graph %>" alt="Graph for <%= @slug %>">
       </div>

@@ -8,10 +8,18 @@ defmodule AltbeeWeb.HomeLive do
   def mount(_params, %{"user_id" => user_id}, socket) do
     socket =
       with_user(socket, user_id, fn socket ->
+        user = socket.assigns.user
+
+        if connected?(socket) do
+          Goals.load_goals_async(user)
+        end
+
+        goals_from_cache = sort_goals(Goals.load_goals_from_cache(user))
+
         socket
-        |> assign(:page_title, "Goals")
-        |> assign_new(:goals, fn -> Goals.fetch_goals!(socket.assigns.user) end)
+        |> assign(:goals, goals_from_cache)
         |> recalculate_filters([])
+        |> assign(:page_title, "Goals")
       end)
 
     {:ok, socket}
@@ -68,6 +76,21 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def no_goals_shown_message(%{goals: []} = assigns) do
+    ~L"""
+    <div class="w-full flex justify-around mt-16">
+      <div class="sk-chase">
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+      </div>
+    </div>
+    """
+  end
+
+  def no_goals_shown_message(%{goals: [], user: %{goals: []}} = assigns) do
     live_component(assigns.socket, __MODULE__.EmptyState.NoGoalsAtAllComponent, assigns)
   end
 
@@ -84,4 +107,23 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def no_goals_shown_message(_assigns), do: nil
+
+  def handle_info({:goal, goal}, socket) do
+    goals =
+      socket.assigns.goals
+      |> Enum.filter(&(&1["slug"] !== goal["slug"]))
+      |> (&[goal | &1]).()
+      |> sort_goals()
+
+    socket =
+      socket
+      |> assign(:goals, goals)
+      |> recalculate_filters([])
+
+    {:noreply, socket}
+  end
+
+  def sort_goals(goals) do
+    Enum.sort_by(goals, fn goal -> {goal["losedate"], goal["slug"]} end)
+  end
 end

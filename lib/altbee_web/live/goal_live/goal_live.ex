@@ -13,12 +13,20 @@ defmodule AltbeeWeb.GoalLive do
     socket =
       socket
       |> with_user(user_id, fn socket ->
+        user = socket.assigns.user
+
+        if connected?(socket) do
+          Goals.load_goal_async(user, slug)
+        end
+
+        goal = Goals.load_goal_from_cache(user, slug)
+
         socket
         |> assign(:waiting, false)
         |> assign(:datapoint_parse_error, nil)
         |> assign(:slug, slug)
-        |> assign(:page_title, slug)
-        |> assign_new(:goal, fn -> Goals.fetch_goal!(slug, socket.assigns.user.access_token) end)
+        |> assign(:page_title, "#{slug} · #{user.username}")
+        |> assign(:goal, goal)
         |> watch_goal()
       end)
 
@@ -30,11 +38,21 @@ defmodule AltbeeWeb.GoalLive do
   end
 
   def new_data_placeholder(%{"last_datapoint" => %{"value" => last_datapoint_value}}) do
-    "e.g. #{last_datapoint_value}"
+    "e.g. #{round_for_placeholder(last_datapoint_value)}"
   end
 
   def new_data_placeholder(_) do
     "e.g. 1"
+  end
+
+  defp round_for_placeholder(value) do
+    floored = floor(value)
+
+    if floored == value do
+      floored
+    else
+      value
+    end
   end
 
   def handle_event(
@@ -144,11 +162,20 @@ defmodule AltbeeWeb.GoalLive do
     %{goal: goal, user: user} = socket.assigns
 
     new_goal = Goals.fetch_goal!(goal["slug"], user.access_token)
+    Goals.put_cache(user, new_goal)
 
     socket =
       socket
       |> assign(:goal, new_goal)
       |> assign(:waiting, false)
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:goal, goal}, socket) do
+    socket =
+      socket
+      |> assign(:goal, goal)
 
     {:noreply, socket}
   end

@@ -11,5 +11,13 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'arrow-parens': [
+      2,
+      'as-needed'
+    ],
+    'comma-dangle': [
+      2,
+      'only-multiline'
+    ]
   }
 }

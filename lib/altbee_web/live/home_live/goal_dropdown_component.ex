@@ -6,6 +6,6 @@ defmodule AltbeeWeb.HomeLive.GoalDropdownComponent do
   end
 
   def beeminder_url(%{user: user, goal: goal}) do
-    "https:/www.beeminder.com/#{user.username}/#{goal["slug"]}"
+    "https://www.beeminder.com/#{user.username}/#{goal["slug"]}"
   end
 end

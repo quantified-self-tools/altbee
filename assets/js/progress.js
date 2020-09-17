@@ -6,7 +6,7 @@ window.addEventListener('phx:page-loading-start', () => {
   cancelPendingLoad()
   pendingLoad = setTimeout(() => {
     NProgress.start()
-  }, 250)
+  }, 800)
 })
 
 window.addEventListener('phx:page-loading-stop', () => {
