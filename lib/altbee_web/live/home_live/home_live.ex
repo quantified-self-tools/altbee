@@ -32,7 +32,7 @@ defmodule AltbeeWeb.HomeLive do
       fields = [
         normalize_string(goal["slug"]),
         normalize_string(goal["title"]),
-        normalize_string(goal["gunints"]),
+        normalize_string(goal["gunits"]),
         to_string(goal_color(goal["safebuf"]))
       ]
 
