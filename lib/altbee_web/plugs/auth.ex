@@ -29,6 +29,8 @@ defmodule AltbeeWeb.Auth do
   end
 
   defp redirect_to_login_page(conn) do
-    redirect(conn, to: Routes.user_path(conn, :login))
+    conn
+    |> redirect(to: Routes.user_path(conn, :login))
+    |> halt()
   end
 end

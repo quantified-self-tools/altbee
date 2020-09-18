@@ -2,7 +2,7 @@ defmodule AltbeeWeb.HomeLive do
   use AltbeeWeb, :live_view
 
   alias __MODULE__.GoalComponent
-  alias Altbee.Goals
+  alias Altbee.{Accounts, Goals}
   import Goals.Color, only: [goal_color: 1]
 
   def mount(_params, %{"user_id" => user_id}, socket) do
@@ -11,7 +11,7 @@ defmodule AltbeeWeb.HomeLive do
         user = socket.assigns.user
 
         if connected?(socket) do
-          Goals.load_goals_async(user)
+          Accounts.refresh_user_async(user)
         end
 
         goals_from_cache = sort_goals(Goals.load_goals_from_cache(user))
@@ -73,6 +73,10 @@ defmodule AltbeeWeb.HomeLive do
     |> :unicode.characters_to_nfkd_binary()
   end
 
+  def no_goals_shown_message(%{goals: [], user: %{goals: []}} = assigns) do
+    live_component(assigns.socket, __MODULE__.EmptyState.NoGoalsAtAllComponent, assigns)
+  end
+
   def no_goals_shown_message(%{goals: []} = assigns) do
     ~L"""
     <div class="w-full flex justify-around mt-16">
@@ -86,10 +90,6 @@ defmodule AltbeeWeb.HomeLive do
       </div>
     </div>
     """
-  end
-
-  def no_goals_shown_message(%{goals: [], user: %{goals: []}} = assigns) do
-    live_component(assigns.socket, __MODULE__.EmptyState.NoGoalsAtAllComponent, assigns)
   end
 
   def no_goals_shown_message(%{filtered_goals: []} = assigns) do
@@ -115,6 +115,24 @@ defmodule AltbeeWeb.HomeLive do
 
     socket =
       socket
+      |> assign(:goals, goals)
+      |> recalculate_filters()
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:user, user}, socket) do
+    Goals.load_goals_async(user)
+
+    # Avoid showing cached goals that the user
+    # has since deleted or archived.
+    goals =
+      socket.assigns.goals
+      |> Enum.filter(fn goal -> goal["slug"] in user.goals end)
+
+    socket =
+      socket
+      |> assign(:user, user)
       |> assign(:goals, goals)
       |> recalculate_filters()
 

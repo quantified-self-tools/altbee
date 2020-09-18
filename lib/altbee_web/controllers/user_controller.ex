@@ -6,8 +6,8 @@ defmodule AltbeeWeb.UserController do
   @beeminder_client_id Application.get_env(:altbee, :beeminder_client_id)
   @beeminder_root "https://www.beeminder.com"
 
-  def login(conn, %{"username" => username, "access_token" => token}) do
-    user = Accounts.create_user!(username, token)
+  def login(conn, %{"username" => _username, "access_token" => token}) do
+    user = Accounts.create_user!(token)
 
     conn
     |> put_session(:user_id, user.id)

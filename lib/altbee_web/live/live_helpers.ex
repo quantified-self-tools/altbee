@@ -23,4 +23,15 @@ defmodule AltbeeWeb.LiveHelpers do
       callback.(socket)
     end
   end
+
+  def display_value(value) do
+    floored = floor(value)
+
+    if floored == value do
+      floored
+    else
+      value
+    end
+    |> to_string
+  end
 end

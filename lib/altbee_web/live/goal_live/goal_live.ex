@@ -34,21 +34,11 @@ defmodule AltbeeWeb.GoalLive do
   end
 
   def new_data_placeholder(%{"last_datapoint" => %{"value" => last_datapoint_value}}) do
-    "e.g. #{round_for_placeholder(last_datapoint_value)}"
+    "e.g. #{display_value(last_datapoint_value)}"
   end
 
   def new_data_placeholder(_) do
     "e.g. 1"
-  end
-
-  defp round_for_placeholder(value) do
-    floored = floor(value)
-
-    if floored == value do
-      floored
-    else
-      value
-    end
   end
 
   def handle_event(

@@ -10,7 +10,7 @@
       <% end %>
 
       <p class="text-gray-500 group-hover:text-cool-gray-500 transition ease-in-out duration-150"
-         title="<%= @goal["limsumdate"] %> or pay $<%= @goal["contract"]["amount"] %>">
+         title="<%= @goal["limsumdate"] %> or pay $<%= display_value(@goal["contract"]["amount"]) %>">
       <%= @goal["limsum"] %>
       </p>
     <% end %>
