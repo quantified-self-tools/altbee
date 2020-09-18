@@ -33,10 +33,6 @@ defmodule AltbeeWeb.GoalLive do
     {:ok, socket}
   end
 
-  def mount(_params, _session, socket) do
-    {:ok, redirect_to_login_page(socket)}
-  end
-
   def new_data_placeholder(%{"last_datapoint" => %{"value" => last_datapoint_value}}) do
     "e.g. #{round_for_placeholder(last_datapoint_value)}"
   end

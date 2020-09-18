@@ -26,10 +26,6 @@ defmodule AltbeeWeb.HomeLive do
     {:ok, socket}
   end
 
-  def mount(_params, _session, socket) do
-    {:ok, redirect_to_login_page(socket)}
-  end
-
   defp filter_goals(goals, filters) do
     goals
     |> Enum.filter(fn goal ->

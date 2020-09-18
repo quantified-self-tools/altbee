@@ -14,11 +14,19 @@ defmodule AltbeeWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug AltbeeWeb.Auth
+  end
+
   scope "/", AltbeeWeb do
-    pipe_through :browser
+    pipe_through [:browser, :auth]
 
     live "/", HomeLive, :index
     live "/goal/:slug", GoalLive, :show
+  end
+
+  scope "/", AltbeeWeb do
+    pipe_through :browser
     get "/login", UserController, :login
   end
 
