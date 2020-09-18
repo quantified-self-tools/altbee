@@ -7,6 +7,13 @@
 # General application configuration
 use Mix.Config
 
+admins =
+  System.get_env("ALTBEE_ADMIN_USERNAMES", "")
+  |> String.split(",")
+  |> Enum.map(&String.trim/1)
+  |> Enum.filter(&(&1 !== ""))
+  |> MapSet.new()
+
 config :altbee,
   ecto_repos: [Altbee.Repo],
   generators: [binary_id: true],
@@ -14,7 +21,8 @@ config :altbee,
     System.get_env("BEEMINDER_CLIENT_ID") ||
       raise("""
       environment variable BEEMINDER_CLIENT_ID is missing
-      """)
+      """),
+  admin_usernames: admins
 
 # Configures the endpoint
 config :altbee, AltbeeWeb.Endpoint,

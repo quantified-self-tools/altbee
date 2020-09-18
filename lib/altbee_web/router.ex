@@ -1,6 +1,8 @@
 defmodule AltbeeWeb.Router do
   use AltbeeWeb, :router
 
+  import Phoenix.LiveDashboard.Router
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -18,6 +20,12 @@ defmodule AltbeeWeb.Router do
     plug AltbeeWeb.Auth
   end
 
+  pipeline :admin do
+    if Mix.env() not in [:dev, :test] do
+      plug AltbeeWeb.Admin
+    end
+  end
+
   scope "/", AltbeeWeb do
     pipe_through [:browser, :auth]
 
@@ -30,12 +38,8 @@ defmodule AltbeeWeb.Router do
     get "/login", UserController, :login
   end
 
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: AltbeeWeb.Telemetry
-    end
+  scope "/" do
+    pipe_through [:browser, :auth, :admin]
+    live_dashboard "/dashboard", metrics: AltbeeWeb.Telemetry
   end
 end
