@@ -47,11 +47,11 @@ defmodule Altbee.Accounts do
     })
   end
 
+  @beeminder_user_data_url "https://www.beeminder.com/api/v1/users/me.json"
   def get_beeminder_user_data!(token) do
-    %{body: response, status_code: 200} =
-      HTTPoison.get!("https://www.beeminder.com/api/v1/users/me.json", [],
-        params: [access_token: token]
-      )
+    {:ok, %{body: response, status: 200}} =
+      Finch.build(:get, "#{@beeminder_user_data_url}?access_token=#{token}")
+      |> Finch.request(AltbeeFinch)
 
     Jason.decode!(response)
   end

@@ -54,25 +54,26 @@ defmodule Altbee.Goals do
     end
   end
 
+  @beeminder_goals_base_url "https://www.beeminder.com/api/v1/users/me/goals"
   def fetch_goal!(slug, token) do
-    %{body: response, status_code: 200} =
-      HTTPoison.get!("https://www.beeminder.com/api/v1/users/me/goals/#{slug}.json", [],
-        params: %{access_token: token}
-      )
+    goal_url = "#{@beeminder_goals_base_url}/#{slug}.json?access_token=#{token}"
+
+    {:ok, %{body: response, status: 200}} =
+      Finch.build(:get, goal_url)
+      |> Finch.request(AltbeeFinch)
 
     Jason.decode!(response)
   end
 
   def submit_datapoint!(slug, token, daystamp, value, comment) do
+    goal_url = "#{@beeminder_goals_base_url}/#{slug}/datapoints.json?access_token=#{token}"
+    headers = [{"Content-Type", "application/json"}]
+
     request_body = %{daystamp: daystamp, comment: comment, value: value} |> Jason.encode!()
 
-    %{body: response, status_code: 200} =
-      HTTPoison.post!(
-        "https://www.beeminder.com/api/v1/users/me/goals/#{slug}/datapoints.json",
-        request_body,
-        [{"Content-Type", "application/json"}],
-        params: %{access_token: token}
-      )
+    {:ok, %{body: response, status: 200}} =
+      Finch.build(:post, goal_url, headers, request_body)
+      |> Finch.request(AltbeeFinch)
 
     Jason.decode!(response)
   end

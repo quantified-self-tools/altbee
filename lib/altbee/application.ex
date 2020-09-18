@@ -14,7 +14,8 @@ defmodule Altbee.Application do
       {Phoenix.PubSub, name: Altbee.PubSub},
       AltbeeWeb.Endpoint,
       {Cachex,
-       name: :goals_cache, expiration: expiration(default: :timer.hours(25)), limit: 2_000}
+       name: :goals_cache, expiration: expiration(default: :timer.hours(25)), limit: 2_000},
+      {Finch, name: AltbeeFinch}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
