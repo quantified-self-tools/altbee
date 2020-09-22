@@ -52,7 +52,10 @@
       <% end %>
     </div>
 
-    <form class="bg-white overflow-hidden shadow rounded-lg sm:col-start-2 md:col-start-auto col-span-6 sm:col-span-4 md:col-span-2 p-4" phx-submit="new-datapoint">
+    <form
+      class="bg-white overflow-hidden shadow rounded-lg sm:col-start-2 md:col-start-auto col-span-6 sm:col-span-4 md:col-span-2 p-4"
+        phx-submit="new-datapoint"
+        phx-change="new-datapoint-change">
       <div class="flex justify-center">
         <h2 class="text-xl font-semibold text-cool-gray-700">
           Enter Data
