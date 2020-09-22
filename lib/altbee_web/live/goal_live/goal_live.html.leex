@@ -17,8 +17,13 @@
     <% end %>
 
     <div class="flex items-center sm:items-end leading-tight flex-col sm:flex-row">
-      <h1 class="text-3xl font-bold text-cool-gray-900"><%= @slug %></h1>
-      <h2 class="text-sm mt-1 sm:mt-0 sm:mb-1 sm:ml-3 text-cool-gray-500"><%= @goal["limsumdate"] %></h2>
+      <h1 class="text-3xl font-bold text-cool-gray-900">
+        <%= @slug %>
+      </h1>
+      <h2 class="text-sm mt-1 sm:mt-0 sm:mb-1 sm:ml-3 text-cool-gray-500"
+          title="<%= @goal["limsum"] %>">
+          <%= @goal["limsumdate"] %>
+      </h2>
     </div>
 
     <button
