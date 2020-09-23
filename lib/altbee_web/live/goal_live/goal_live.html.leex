@@ -84,7 +84,9 @@
           <input
             id="value"
             name="value"
+            type="text"
             x-model.number="value"
+            autocomplete="no"
             inputmode="numeric"
             placeholder="<%= new_data_placeholder(@goal) %>"
             class="mx-2 flex-1 form-input block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5">
@@ -120,7 +122,11 @@
           Comment (optional):
         </label>
         <div class="mt-2 flex rounded-md shadow-sm">
-          <input id="comment" name="comment" inputmode="numeric" class="mx-2 flex-1 form-input block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+          <input id="comment"
+                 type="text"
+                 name="comment"
+                 class="mx-2 flex-1 form-input block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                 autocomplete="no">
         </div>
       </div>
 
