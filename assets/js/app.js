@@ -4,6 +4,7 @@ import 'phoenix_html'
 import 'alpinejs'
 
 import './forms'
+import './filter'
 import './progress'
 
 import { Socket } from 'phoenix'
