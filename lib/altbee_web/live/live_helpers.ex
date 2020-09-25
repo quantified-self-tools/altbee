@@ -34,4 +34,13 @@ defmodule AltbeeWeb.LiveHelpers do
     end
     |> to_string
   end
+
+  def display_daystamp(daystamp) do
+    [
+      String.slice(daystamp, 0, 4),
+      String.slice(daystamp, 4, 2),
+      String.slice(daystamp, 6, 2)
+    ]
+    |> Enum.join("-")
+  end
 end

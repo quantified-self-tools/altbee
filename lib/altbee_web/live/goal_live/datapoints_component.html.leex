@@ -1,0 +1,64 @@
+<div class="divide-y divide-cool-gray-300">
+  <%= for datapoint <- @datapoints do %>
+    <form
+      id="datapoint-<%= datapoint["id"]["$oid"] %>"
+      class="py-4 flex"
+      phx-submit="update-datapoint"
+      x-data="{show: true}"
+      x-show="show"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 transform scale-90"
+      x-transition:enter-end="opacity-100 transform scale-100"
+      x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="opacity-100 transform scale-100"
+      x-transition:leave-end="opacity-0 transform scale-90"
+      autocomplete="no">
+      <input type="hidden" name="id" value="<%= datapoint["id"]["$oid"] %>">
+
+      <input
+        class="mx-2 w-32 form-input rounded-md sm:text-sm sm:leading-5 bg-gray-100 px-5"
+        name="daystamp"
+        autocomplete="no"
+        type="text"
+        disabled="disabled"
+        placeholder="<%= display_daystamp(datapoint["daystamp"]) %>"
+        value="<%= display_daystamp(datapoint["daystamp"]) %>">
+
+      <input
+        class="mx-2 w-20 form-input rounded-md sm:text-sm sm:leading-5 px-4"
+        name="value"
+        autocomplete="no"
+        type="text"
+        inputmode="numeric"
+        placeholder="<%= display_value(datapoint["value"]) %>"
+        value="<%= display_value(datapoint["value"]) %>">
+
+      <input
+        class="mx-2 flex-grow max-w-sm form-input rounded-md sm:text-sm sm:leading-5"
+        name="comment"
+        autocomplete="no"
+        type="text"
+        placeholder="<%= datapoint["comment"] %>"
+        value="<%= datapoint["comment"] %>">
+
+      <div class="flex space-x-6 ml-auto mr-6">
+        <div class="flex rounded-md shadow-sm">
+          <button type="submit" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-purple-800 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+            Update
+          </button>
+        </div>
+
+        <div class="flex rounded-md shadow-sm">
+          <button
+            type="button"
+            class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-red-700 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
+            phx-click="delete-datapoint"
+            @click="show = false"
+            phx-value-datapoint-id="<%= datapoint["id"]["$oid"] %>">
+            Delete
+          </button>
+        </div>
+      </div>
+    </form>
+  <% end %>
+</div>

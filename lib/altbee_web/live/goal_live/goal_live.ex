@@ -6,8 +6,10 @@ defmodule AltbeeWeb.GoalLive do
   @datapoint_time_parse_error_msg "Your datapoint should be a number or a time."
   @datapoint_empty_msg "Enter a value for your datapoint."
 
-  alias Altbee.Goals
+  alias Altbee.{Datapoints, Goals}
   import Altbee.Datapoints, only: [parse_datapoint: 1]
+
+  alias __MODULE__.DatapointsComponent
 
   def mount(%{"slug" => slug}, %{"user_id" => user_id}, socket) do
     socket =
@@ -54,7 +56,7 @@ defmodule AltbeeWeb.GoalLive do
 
           enqueue_goal_poll(socket)
 
-          Goals.submit_datapoint!(slug, access_token, daystamp, value, comment)
+          Datapoints.submit_datapoint!(slug, access_token, daystamp, value, comment)
 
           socket
           |> assign(:datapoint_parse_error, nil)
@@ -83,6 +85,30 @@ defmodule AltbeeWeb.GoalLive do
       else
         socket
       end
+
+    {:noreply, socket}
+  end
+
+  def handle_event(
+        "update-datapoint",
+        %{"value" => value, "comment" => comment, "id" => id},
+        socket
+      ) do
+    send(socket.root_pid, {:update_datapoint, id, value, comment})
+
+    socket =
+      socket
+      |> assign(:waiting, true)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("delete-datapoint", %{"datapoint-id" => id}, socket) do
+    send(socket.root_pid, {:delete_datapoint, id})
+
+    socket =
+      socket
+      |> assign(:waiting, true)
 
     {:noreply, socket}
   end
@@ -176,6 +202,30 @@ defmodule AltbeeWeb.GoalLive do
     socket =
       socket
       |> assign(:goal, goal)
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:delete_datapoint, id}, socket) do
+    %{goal: goal, user: user} = socket.assigns
+
+    enqueue_goal_poll(socket)
+
+    Task.start(fn ->
+      Datapoints.delete_datapoint!(goal["slug"], id, user.access_token)
+    end)
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:update_datapoint, id, value, comment}, socket) do
+    %{goal: goal, user: user} = socket.assigns
+
+    enqueue_goal_poll(socket)
+
+    Task.start(fn ->
+      Datapoints.update_datapoint!(goal["slug"], id, user.access_token, value, comment)
+    end)
 
     {:noreply, socket}
   end

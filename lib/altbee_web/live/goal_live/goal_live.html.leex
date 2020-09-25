@@ -140,6 +140,10 @@
         </span>
       </div>
     </form>
+
+    <div class="bg-white shadow rounded-lg col-span-6 py-4 px-6">
+      <%= live_component @socket, DatapointsComponent, id: "datapoints", datapoints: @goal["recent_data"] %>
+    </div>
   </div>
 </article>
 <% end %>

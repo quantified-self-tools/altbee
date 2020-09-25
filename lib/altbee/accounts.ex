@@ -1,4 +1,6 @@
 defmodule Altbee.Accounts do
+  @beeminder_user_data_url Application.get_env(:altbee, :user_data_url)
+
   import Ecto.Query, warn: false
   alias Altbee.Repo
 
@@ -47,7 +49,6 @@ defmodule Altbee.Accounts do
     })
   end
 
-  @beeminder_user_data_url "https://www.beeminder.com/api/v1/users/me.json"
   def get_beeminder_user_data!(token) do
     {:ok, %{body: response, status: 200}} =
       Finch.build(:get, "#{@beeminder_user_data_url}?access_token=#{token}")

@@ -1,4 +1,6 @@
 defmodule Altbee.Goals do
+  @beeminder_goals_base_url Application.get_env(:altbee, :goals_base_url)
+
   alias Altbee.Accounts.User
 
   def load_goals_async(%User{goals: goals, access_token: token} = user) do
@@ -54,25 +56,11 @@ defmodule Altbee.Goals do
     end
   end
 
-  @beeminder_goals_base_url "https://www.beeminder.com/api/v1/users/me/goals"
   def fetch_goal!(slug, token) do
     goal_url = "#{@beeminder_goals_base_url}/#{slug}.json?access_token=#{token}"
 
     {:ok, %{body: response, status: 200}} =
       Finch.build(:get, goal_url)
-      |> Finch.request(AltbeeFinch)
-
-    Jason.decode!(response)
-  end
-
-  def submit_datapoint!(slug, token, daystamp, value, comment) do
-    goal_url = "#{@beeminder_goals_base_url}/#{slug}/datapoints.json?access_token=#{token}"
-    headers = [{"Content-Type", "application/json"}]
-
-    request_body = %{daystamp: daystamp, comment: comment, value: value} |> Jason.encode!()
-
-    {:ok, %{body: response, status: 200}} =
-      Finch.build(:post, goal_url, headers, request_body)
       |> Finch.request(AltbeeFinch)
 
     Jason.decode!(response)

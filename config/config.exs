@@ -24,6 +24,11 @@ config :altbee,
       """),
   admin_usernames: admins
 
+config :altbee,
+  goals_base_url: "https://www.beeminder.com/api/v1/users/me/goals",
+  user_data_url: "https://www.beeminder.com/api/v1/users/me.json",
+  user_base_url: "https://www.beeminder.com/api/v1/users/me"
+
 # Configures the endpoint
 config :altbee, AltbeeWeb.Endpoint,
   url: [host: "localhost"],
