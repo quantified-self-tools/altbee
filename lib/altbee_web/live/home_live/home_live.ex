@@ -122,13 +122,15 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def handle_info({:user, user}, socket) do
-    Goals.load_goals_async(user)
-
     # Avoid showing cached goals that the user
     # has since deleted or archived.
     goals =
       socket.assigns.goals
       |> Enum.filter(fn goal -> goal["slug"] in user.goals end)
+
+    unless goal_cache_is_up_to_date?(goals, user, socket.assigns.user) do
+      Goals.load_goals_async(user)
+    end
 
     socket =
       socket
@@ -141,5 +143,13 @@ defmodule AltbeeWeb.HomeLive do
 
   def sort_goals(goals) do
     Enum.sort_by(goals, fn goal -> {goal["losedate"], goal["slug"]} end)
+  end
+
+  defp goal_cache_is_up_to_date?(goals, new_user, old_user) do
+    new_user.beeminder_updated == old_user.beeminder_updated &&
+      MapSet.equal?(
+        MapSet.new(Enum.map(goals, & &1["slug"])),
+        MapSet.new(new_user.goals)
+      )
   end
 end
