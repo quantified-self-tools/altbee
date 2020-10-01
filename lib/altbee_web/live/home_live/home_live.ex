@@ -60,6 +60,17 @@ defmodule AltbeeWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("refresh", _, socket) do
+    Accounts.refresh_user_async(socket.assigns.user)
+
+    socket =
+      socket
+      |> assign(:goals, [])
+      |> recalculate_filters()
+
+    {:noreply, socket}
+  end
+
   defp recalculate_filters(%{assigns: %{goals: goals, filters: filters}} = socket) do
     assign(socket, :filtered_goals, filter_goals(goals, filters))
   end
