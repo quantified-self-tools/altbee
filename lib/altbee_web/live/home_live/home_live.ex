@@ -60,6 +60,21 @@ defmodule AltbeeWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("filter-keydown", %{"key" => "Enter"}, socket) do
+    case socket.assigns.filtered_goals do
+      [goal | _rest] ->
+        goal_route = Routes.goal_path(socket, :show, goal["slug"])
+        {:noreply, redirect(socket, to: goal_route)}
+
+      [] ->
+        {:noreply, socket}
+    end
+  end
+
+  def handle_event("filter-keydown", _, socket) do
+    {:noreply, socket}
+  end
+
   def handle_event("refresh", _, socket) do
     Accounts.refresh_user_async(socket.assigns.user)
 
