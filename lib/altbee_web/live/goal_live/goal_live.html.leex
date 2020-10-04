@@ -37,7 +37,7 @@
   <div class="grid grid-cols-6 sm:mx-4 lg:mx-6 gap-4 sm:gap-6 my-5">
     <div class="relative bg-white overflow-hidden shadow rounded-lg max-w-3xl col-span-6 md:col-span-4 <%= if waiting?(assigns), do: "bg-opacity-75" %>">
       <div class="px-4 py-5 sm:p-6 <%= if waiting?(assigns), do: "opacity-25" %>">
-        <img src="<%= @goal["svg_url"] %>" alt="Graph for <%= @goal["slug"] %>">
+        <img src="<%= @goal["graph_url"] %>" alt="Graph for <%= @goal["slug"] %>">
       </div>
       <%= if waiting?(assigns) do %>
         <div class="absolute" style="top: calc(50% - 20px); left: calc(50% - 20px)">
