@@ -35,7 +35,7 @@ defmodule Altbee.MixProject do
     [
       {:phoenix, "~> 1.5.3"},
       {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.4"},
+      {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.14.4"},
       {:floki, ">= 0.0.0", only: :test},
@@ -49,7 +49,7 @@ defmodule Altbee.MixProject do
       {:cachex, "~> 3.3"},
       {:timex, "~> 3.6.2"},
       {:distillery, "~> 2.1"},
-      {:finch, "~> 0.3.1"},
+      {:finch, "~> 0.4.0"},
       {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
