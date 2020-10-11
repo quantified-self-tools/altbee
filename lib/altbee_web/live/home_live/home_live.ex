@@ -1,7 +1,7 @@
 defmodule AltbeeWeb.HomeLive do
   use AltbeeWeb, :live_view
 
-  alias __MODULE__.GoalComponent
+  alias __MODULE__.GridComponent
   alias Altbee.{Accounts, Goals}
   import Goals.Color, only: [goal_color: 1]
 
