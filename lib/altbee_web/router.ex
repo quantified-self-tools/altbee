@@ -40,6 +40,6 @@ defmodule AltbeeWeb.Router do
 
   scope "/" do
     pipe_through [:browser, :auth, :admin]
-    live_dashboard "/dashboard", metrics: AltbeeWeb.Telemetry
+    live_dashboard "/dashboard", metrics: AltbeeWeb.Telemetry, ecto_repos: [Altbee.Repo]
   end
 end

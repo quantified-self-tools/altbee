@@ -50,6 +50,7 @@ defmodule Altbee.MixProject do
       {:timex, "~> 3.6.2"},
       {:distillery, "~> 2.1"},
       {:finch, "~> 0.4.0"},
+      {:ecto_psql_extras, "~> 0.4"},
       {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
