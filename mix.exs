@@ -52,7 +52,9 @@ defmodule Altbee.MixProject do
       {:finch, "~> 0.4.0"},
       {:ecto_psql_extras, "~> 0.4"},
       {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:bagg,
+       github: "quantified-self-tools/bagg", ref: "ab927426da7fe0b66ce1eb57238a4ecec427ff72"}
     ]
   end
 

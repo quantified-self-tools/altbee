@@ -38,6 +38,11 @@ defmodule AltbeeWeb.Router do
     get "/login", UserController, :login
   end
 
+  scope "/api", AltbeeWeb do
+    pipe_through :api
+    post "/bagg", BaggController, :index
+  end
+
   scope "/" do
     pipe_through [:browser, :auth, :admin]
     live_dashboard "/dashboard", metrics: AltbeeWeb.Telemetry, ecto_repos: [Altbee.Repo]
