@@ -23,3 +23,7 @@ const liveSocket = new LiveSocket('/live', Socket, {
 liveSocket.connect()
 
 window.liveSocket = liveSocket
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+}

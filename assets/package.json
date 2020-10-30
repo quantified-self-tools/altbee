@@ -14,7 +14,11 @@
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view",
     "spinkit": "^2.0.1",
-    "tailwindcss": "^1.9.6"
+    "tailwindcss": "^1.9.6",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
