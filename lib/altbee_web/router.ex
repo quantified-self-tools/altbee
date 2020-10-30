@@ -36,6 +36,8 @@ defmodule AltbeeWeb.Router do
   scope "/", AltbeeWeb do
     pipe_through :browser
     get "/login", UserController, :login
+
+    get "/graph-proxy", GraphProxyController, :index
   end
 
   scope "/api", AltbeeWeb do

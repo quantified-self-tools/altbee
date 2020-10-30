@@ -1,5 +1,5 @@
 <li class="col-span-1 flex shadow rounded-md" id="<%= @id %>">
-  <%= live_component @socket, GoalGraphComponent, safebuf: @goal["safebuf"], graph: @goal["svg_url"], slug: @goal["slug"] %>
+  <%= live_component @socket, GoalGraphComponent, safebuf: @goal["safebuf"], graph: Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"]), slug: @goal["slug"] %>
 
   <div class="flex-1 flex items-center justify-between border-t border-r border-b border-cool-gray-300 bg-white rounded-r-md overflow-hidden">
     <%= live_redirect to: Routes.goal_path(@socket, :show, @goal["slug"]), class: "flex-1 px-4 py-2 text-sm leading-5 truncate focus:outline-none group" do %>

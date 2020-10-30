@@ -8,14 +8,26 @@ defmodule Altbee.Application do
   import Cachex.Spec, only: [expiration: 1]
 
   def start(_type, _args) do
+    goals_cache =
+      Supervisor.child_spec(
+        {Cachex,
+         name: :goals_cache, expiration: expiration(default: :timer.hours(25)), limit: 2_000},
+        id: :goals_cache
+      )
+
+    assets_subresource_cache =
+      Supervisor.child_spec({Cachex, name: :assets_subresource_cache, limit: 10},
+        id: :assets_subresource_cache
+      )
+
     children = [
       Altbee.Repo,
       AltbeeWeb.Telemetry,
       {Phoenix.PubSub, name: Altbee.PubSub},
       AltbeeWeb.Endpoint,
-      {Cachex,
-       name: :goals_cache, expiration: expiration(default: :timer.hours(25)), limit: 2_000},
-      {Finch, name: AltbeeFinch}
+      {Finch, name: AltbeeFinch},
+      goals_cache,
+      assets_subresource_cache
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
