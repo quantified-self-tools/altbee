@@ -1,0 +1,14 @@
+{
+  "name": "Altbee",
+  "short_name": "Altbee",
+  "start_url": "/",
+  "description": "The alternative Beeminder web interface",
+  "display": "standalone",
+  "background_color": "#6875f5",
+  "theme_color": "#6875f5",
+  "icons": [{
+    "src": "images/altbee.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  }]
+}

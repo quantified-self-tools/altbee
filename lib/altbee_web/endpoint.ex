@@ -17,7 +17,7 @@ defmodule AltbeeWeb.Endpoint do
     at: "/",
     from: :altbee,
     gzip: true,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js favicon.ico robots.txt manifest.webmanifest)
 
   if code_reloading? do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
