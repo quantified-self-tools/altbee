@@ -1,5 +1,5 @@
 <li class="col-span-1 flex shadow rounded-md" id="<%= @id %>">
-  <%= live_component @socket, GoalGraphComponent, safebuf: @goal["safebuf"], graph: Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"]), slug: @goal["slug"] %>
+  <%= live_component @socket, GoalGraphComponent, safebuf: @goal["safebuf"], graph: Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"]), slug: @goal["slug"], won: @goal["won"] %>
 
   <div class="flex-1 flex items-center justify-between border-t border-r border-b border-cool-gray-300 bg-white rounded-r-md overflow-hidden">
     <%= live_redirect to: Routes.goal_path(@socket, :show, @goal["slug"]), class: "flex-1 px-4 py-2 text-sm leading-5 truncate focus:outline-none group" do %>
@@ -9,10 +9,16 @@
         <svg class="text-gray-400 opacity-50 inline-block h-4 w-4 mb-1 ml-1" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       <% end %>
 
-      <p class="text-gray-500 group-hover:text-cool-gray-500 transition ease-in-out duration-150"
-         title="<%= @goal["limsumdate"] %> or pay $<%= display_value(@goal["contract"]["amount"]) %>">
-      <%= @goal["limsum"] %>
-      </p>
+      <%= if @goal["won"] do %>
+        <p class="text-gray-500 group-hover:text-cool-gray-500 transition ease-in-out duration-150">
+          Completed
+        </p>
+      <% else %>
+        <p class="text-gray-500 group-hover:text-cool-gray-500 transition ease-in-out duration-150"
+           title="<%= @goal["limsumdate"] %> or pay $<%= display_value(@goal["contract"]["amount"]) %>">
+          <%= @goal["limsum"] %>
+        </p>
+      <% end %>
     <% end %>
     <%= live_component @socket, GoalDropdownComponent, goal: @goal, user: @user %>
   </div>
