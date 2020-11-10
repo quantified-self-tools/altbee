@@ -1,6 +1,9 @@
 defmodule Altbee.Goals do
   @beeminder_goals_base_url Application.get_env(:altbee, :goals_base_url)
 
+  require Logger
+  use Retry.Annotation
+
   alias Altbee.Accounts.User
 
   def load_goals_async(%User{goals: goals, access_token: token} = user) do
@@ -10,12 +13,19 @@ defmodule Altbee.Goals do
       goals
       |> Task.async_stream(
         fn slug ->
-          goal = fetch_goal!(slug, token)
-          put_cache(user, goal)
-          send(pid, {:goal, goal})
+          case fetch_goal(slug, token) do
+            {:ok, goal} ->
+              put_cache(user, goal)
+              send(pid, {:goal, goal})
+
+            {:error, err} ->
+              msg = Exception.message(err)
+
+              Logger.error("Failed to fetch goal #{slug} for #{user.username}: #{msg}")
+          end
         end,
         max_concurrency: 8,
-        timeout: 10_000,
+        timeout: 15_000,
         ordered: false
       )
       |> Stream.run()
@@ -26,9 +36,15 @@ defmodule Altbee.Goals do
     pid = self()
 
     Task.start_link(fn ->
-      goal = fetch_goal!(slug, token)
-      put_cache(user, goal)
-      send(pid, {:goal, goal})
+      case fetch_goal(slug, token) do
+        {:ok, goal} ->
+          put_cache(user, goal)
+          send(pid, {:goal, goal})
+
+        {:error, err} ->
+          msg = Exception.message(err)
+          Logger.error("Failed to fetch goal #{slug} for #{user.username}: #{msg}")
+      end
     end)
   end
 
@@ -56,13 +72,11 @@ defmodule Altbee.Goals do
     end
   end
 
-  def fetch_goal!(slug, token) do
+  @retry with: exponential_backoff() |> randomize() |> expiry(10_000)
+  def fetch_goal(slug, token) do
     goal_url = "#{@beeminder_goals_base_url}/#{slug}.json?access_token=#{token}"
 
-    {:ok, %{body: response, status: 200}} =
-      Finch.build(:get, goal_url)
-      |> Finch.request(AltbeeFinch)
-
-    Jason.decode!(response)
+    Finch.build(:get, goal_url)
+    |> Altbee.Finch.request_json()
   end
 end

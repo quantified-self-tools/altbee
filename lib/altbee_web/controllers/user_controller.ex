@@ -7,7 +7,7 @@ defmodule AltbeeWeb.UserController do
   @beeminder_root "https://www.beeminder.com"
 
   def login(conn, %{"username" => _username, "access_token" => token}) do
-    user = Accounts.create_user!(token)
+    user = Accounts.create_user(token)
 
     conn
     |> put_session(:user_id, user.id)

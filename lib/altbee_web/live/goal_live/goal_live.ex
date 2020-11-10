@@ -1,6 +1,8 @@
 defmodule AltbeeWeb.GoalLive do
   use AltbeeWeb, :live_view
 
+  require Logger
+
   @goal_poll_interval 400
   @datapoint_number_parse_error_msg "Your datapoint should be a number."
   @datapoint_time_parse_error_msg "Your datapoint should be a number or a time."
@@ -187,15 +189,28 @@ defmodule AltbeeWeb.GoalLive do
   def handle_info(:refresh, socket) do
     %{goal: goal, user: user} = socket.assigns
 
-    new_goal = Goals.fetch_goal!(goal["slug"], user.access_token)
-    Goals.put_cache(user, new_goal)
+    case Goals.fetch_goal(goal["slug"], user.access_token) do
+      {:ok, new_goal} ->
+        Goals.put_cache(user, new_goal)
 
-    socket =
-      socket
-      |> assign(:goal, new_goal)
-      |> assign(:waiting, false)
+        socket =
+          socket
+          |> assign(:goal, new_goal)
+          |> assign(:waiting, false)
 
-    {:noreply, socket}
+        {:noreply, socket}
+
+      {:error, err} ->
+        msg = Exception.message(err)
+        Logger.error("Error refreshing #{goal["slug"]} for #{user.username}: #{msg}")
+
+        socket =
+          socket
+          |> put_flash(:error, "An error occurred while trying to refresh your goal")
+          |> assign(:waiting, false)
+
+        {:noreply, socket}
+    end
   end
 
   def handle_info({:goal, goal}, socket) do

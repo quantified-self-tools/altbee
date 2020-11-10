@@ -17,7 +17,7 @@ defmodule Altbee.Accounts.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user, attrs \\ %{}) do
     user
     |> cast(attrs, [:username, :access_token, :timezone, :beeminder_updated, :goals])
     |> validate_required([:username, :access_token, :timezone, :beeminder_updated, :goals])
