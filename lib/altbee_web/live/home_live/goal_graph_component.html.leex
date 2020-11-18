@@ -17,13 +17,13 @@
       <div class="h-7 pt-2 flex items-center">
         <%= live_redirect to: Routes.goal_path(@socket, :show, @slug),
           "aria-label": "Goal",
-          class: "text-cool-gray-500 hover:text-cool-gray-600 transition ease-in-out duration-150 absolute top-0 left-0 mt-6 ml-6 bg-cool-gray-50 rounded-full p-3" do %>
+          class: "text-cool-gray-500 hover:text-cool-gray-600 transition absolute top-0 left-0 mt-6 ml-6 bg-cool-gray-50 rounded-full p-3" do %>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"></path></svg>
        <% end %>
 
         <button
           aria-label="Close"
-          class="text-cool-gray-500 hover:text-cool-gray-600 transition ease-in-out duration-150 absolute top-0 right-0 mt-6 mr-6 bg-cool-gray-50 rounded-full p-3"
+          class="text-cool-gray-500 hover:text-cool-gray-600 transition absolute top-0 right-0 mt-6 mr-6 bg-cool-gray-50 rounded-full p-3"
           @click="expanded = false">
          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
         </button>

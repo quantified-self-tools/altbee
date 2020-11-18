@@ -2,7 +2,7 @@
      x-data="{open: false}"
      @click.away="open = false">
   <div>
-    <button class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-cool-gray-100 transition ease-in-out duration-150" @click="open = !open">
+    <button class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-cool-gray-100 transition" @click="open = !open">
       <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
         <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
       </svg>
@@ -13,14 +13,14 @@
        :aria-expanded="open"
        x-cloak
        x-show="open"
-       x-transition:enter="transition ease-out duration-100"
-       x-transition:enter-start="transform opacity-0 scale-95"
-       x-transition:enter-end="transform opacity-100 scale-100"
-       x-transition:leave="transition ease-in duration-75"
-       x-transition:leave-start="transform opacity-100 scale-100"
-       x-transition:leave-end="transform opacity-0 scale-95"
+       x-transition:enter="ease-out duration-100"
+       x-transition:enter-start="opacity-0 scale-95"
+       x-transition:enter-end="opacity-100 scale-100"
+       x-transition:leave="ease-in duration-75"
+       x-transition:leave-start="opacity-100 scale-100"
+       x-transition:leave-end="opacity-0 scale-95"
        >
-    <div class="rounded-md bg-cool-gray-50 shadow-xs border-gray-300">
+    <div class="rounded-md bg-cool-gray-50 ring-1 ring-black ring-opacity-5 border-gray-300 group">
       <div class="py-1 space-y-1" role="menu" aria-orientation="vertical">
         <a href="<%= beeminder_url(assigns) %>" class="<%= menu_link_class() %>" role="menuitem">
           <span class="group-focus:underline">Beeminder</span>

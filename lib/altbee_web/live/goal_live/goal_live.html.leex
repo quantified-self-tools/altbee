@@ -12,7 +12,7 @@
 <% else %>
 <article class="px-4 sm:px-6 py-4">
   <header class="flex justify-between w-100 items-center">
-    <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition ease-in-out duration-150", "aria-label": "Back" do %>
+    <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition", "aria-label": "Back" do %>
       <svg viewBox="0 0 20 20" fill="currentColor" class="chevron-double-left w-6 h-6"><path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
     <% end %>
 
@@ -29,7 +29,7 @@
     <button
       phx-click="refresh"
       aria-label="Refresh"
-      class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition ease-in-out duration-150">
+      class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-cool-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition">
       <svg viewBox="0 0 20 20" fill="currentColor" class="refresh w-6 h-6"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
     </button>
   </header>
@@ -68,7 +68,7 @@
           Date
         </label>
 
-        <select id="daystamp" name="daystamp" class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5">
+        <select id="daystamp" name="daystamp" class="mt-1 border-cool-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:border-blue-300 sm:text-sm sm:leading-5">
           <%= for i <- 0..4 do %>
             <option value="<%= daystamp_from_diff(i, @user.timezone, @goal["deadline"]) %>">
               <%= day_text_from_diff(i, @user.timezone, @goal["deadline"]) %>
@@ -90,7 +90,7 @@
             autocomplete="no"
             inputmode="numeric"
             placeholder="<%= new_data_placeholder(@goal) %>"
-            class="mx-2 flex-1 form-input block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+            class="mx-2 flex-1 border-cool-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5">
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
               <%= if @datapoint_parse_error do %>
                 <div class="pointer-events-none mr-1">
@@ -128,14 +128,14 @@
           <input id="comment"
                  type="text"
                  name="comment"
-                 class="mx-2 flex-1 form-input block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                 class="mx-2 flex-1 border-cool-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 block w-full min-w-0 rounded-md transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                  autocomplete="no">
         </div>
       </div>
 
       <div class="mt-5 flex justify-center w-100">
         <span class="inline-flex rounded-md shadow-sm">
-          <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-600 hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:shadow-outline-purple active:bg-purple-700 transition ease-in-out duration-150">
+          <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-purple-600 hover:bg-purple-500 focus:outline-none focus:border-purple-700 focus:ring ring-opacity-50 ring-purple-200 active:bg-purple-700 transition">
             Add Progress
           </button>
         </span>
