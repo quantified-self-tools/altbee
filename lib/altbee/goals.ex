@@ -1,5 +1,5 @@
 defmodule Altbee.Goals do
-  @beeminder_goals_base_url Application.get_env(:altbee, :goals_base_url)
+  @beeminder_goals_base_url Application.compile_env(:altbee, :goals_base_url)
 
   require Logger
   use Retry.Annotation

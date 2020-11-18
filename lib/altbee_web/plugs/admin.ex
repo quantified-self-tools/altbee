@@ -2,9 +2,11 @@ defmodule AltbeeWeb.Admin do
   import Plug.Conn
   import Phoenix.Controller
 
+  @admin_usernames Application.compile_env(:altbee, :admin_usernames)
+
   def init(_opts) do
     %{
-      admin_usernames: Application.get_env(:altbee, :admin_usernames)
+      admin_usernames: @admin_usernames
     }
   end
 

@@ -1,5 +1,5 @@
 defmodule Altbee.Accounts do
-  @beeminder_user_data_url Application.get_env(:altbee, :user_data_url)
+  @beeminder_user_data_url Application.compile_env(:altbee, :user_data_url)
 
   require Logger
   use Retry.Annotation

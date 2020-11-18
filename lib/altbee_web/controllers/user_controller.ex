@@ -3,7 +3,7 @@ defmodule AltbeeWeb.UserController do
 
   alias Altbee.Accounts
 
-  @beeminder_client_id Application.get_env(:altbee, :beeminder_client_id)
+  @beeminder_client_id Application.compile_env(:altbee, :beeminder_client_id)
   @beeminder_root "https://www.beeminder.com"
 
   def login(conn, %{"username" => _username, "access_token" => token}) do

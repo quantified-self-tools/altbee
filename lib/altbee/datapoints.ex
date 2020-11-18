@@ -1,6 +1,6 @@
 defmodule Altbee.Datapoints do
-  @beeminder_goals_base_url Application.get_env(:altbee, :goals_base_url)
-  @beeminder_user_base_url Application.get_env(:altbee, :user_base_url)
+  @beeminder_goals_base_url Application.compile_env(:altbee, :goals_base_url)
+  @beeminder_user_base_url Application.compile_env(:altbee, :user_base_url)
 
   @spec parse_datapoint(String.t()) ::
           {:ok, number()} | {:error, :empty} | {:error, :number} | {:error, :time}

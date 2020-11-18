@@ -8,7 +8,7 @@ defmodule Altbee.ReleaseTasks do
     :ecto_sql
   ]
 
-  @repos Application.get_env(:altbee, :ecto_repos, [])
+  @repos Application.compile_env(:altbee, :ecto_repos, [])
 
   def migrate(_argv) do
     start_services()
