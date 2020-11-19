@@ -39,7 +39,6 @@
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss": "^8.1.7",
     "postcss-loader": "^4.0.4",
-    "postcss-preset-env": "^6.7.0",
     "terser-webpack-plugin": "^4.2.2",
     "webpack": "4.44.2",
     "webpack-cli": "^3.3.12"
