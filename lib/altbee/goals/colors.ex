@@ -16,5 +16,5 @@ defmodule Altbee.Goals.Color do
   def goal_color_bg_class(:orange), do: "bg-orange-300"
   def goal_color_bg_class(:blue), do: "bg-blue-400"
   def goal_color_bg_class(:green), do: "bg-green-500"
-  def goal_color_bg_class(:gray), do: "bg-teal-600"
+  def goal_color_bg_class(:gray), do: "bg-teal-500"
 end

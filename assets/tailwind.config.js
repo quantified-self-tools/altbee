@@ -13,9 +13,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'cool-gray': colors.coolGray,
         orange: colors.orange,
-        green: colors.green,
         teal: colors.teal,
       },
       fontFamily: {

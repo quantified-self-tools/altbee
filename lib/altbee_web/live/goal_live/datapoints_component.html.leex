@@ -1,4 +1,4 @@
-<div class="divide-y divide-cool-gray-300">
+<div class="divide-y divide-gray-300">
   <%= for datapoint <- @datapoints do %>
     <form
       id="datapoint-<%= datapoint["id"]["$oid"] %>"
@@ -17,7 +17,7 @@
 
       <div class="flex">
         <input
-          class="mx-2 w-32 border-cool-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 rounded-md sm:text-sm sm:leading-5 bg-gray-100 px-4 sm:px-5"
+          class="mx-2 w-32 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 rounded-md sm:text-sm sm:leading-5 bg-gray-100 px-4 sm:px-5"
           name="daystamp"
           autocomplete="no"
           type="text"
@@ -26,7 +26,7 @@
           value="<%= display_daystamp(datapoint["daystamp"]) %>">
 
         <input
-          class="mx-2 w-20 border-cool-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 rounded-md sm:text-sm sm:leading-5 px-4"
+          class="mx-2 w-20 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 rounded-md sm:text-sm sm:leading-5 px-4"
           name="value"
           autocomplete="no"
           type="text"
@@ -36,7 +36,7 @@
       </div>
 
       <input
-        class="mx-2 flex-grow w-full md:w-auto max-w-sm border-cool-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 rounded-md sm:text-sm sm:leading-5"
+        class="mx-2 flex-grow w-full md:w-auto max-w-sm border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 rounded-md sm:text-sm sm:leading-5"
         name="comment"
         autocomplete="no"
         type="text"
