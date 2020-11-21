@@ -121,7 +121,7 @@ defmodule AltbeeWeb.HomeLive do
   def no_goals_shown_message(%{filtered_goals: []} = assigns) do
     ~L"""
     <div class="flex justify-center">
-      <div class="rounded-md bg-blue-200 py-4 sm:py-5 px-6 sm:px-10 mx-4 max-w-max-content">
+      <div class="rounded-md bg-blue-200 py-4 sm:py-5 px-6 sm:px-10 mx-4 max-w-max">
         <p class="leading-5 text-blue-700">
           You don't have any goals that match this filter.
         </p>
