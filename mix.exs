@@ -33,15 +33,15 @@ defmodule Altbee.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.3"},
+      {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.14.4"},
+      {:phoenix_live_view, "~> 0.15.0"},
       {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.3.2"},
+      {:phoenix_live_dashboard, "~> 0.4.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:jason, "~> 1.0"},
@@ -55,7 +55,7 @@ defmodule Altbee.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:retry, "~> 0.14"},
       {:bagg,
-       github: "quantified-self-tools/bagg", ref: "ab927426da7fe0b66ce1eb57238a4ecec427ff72"}
+       github: "quantified-self-tools/bagg", ref: "2fe6ebfa1ffd583268630561c137a93569b44f65"}
     ]
   end
 
