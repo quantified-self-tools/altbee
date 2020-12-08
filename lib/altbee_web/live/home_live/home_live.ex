@@ -168,7 +168,13 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def sort_goals(goals) do
-    Enum.sort_by(goals, fn goal -> {goal["losedate"], goal["slug"]} end)
+    Enum.sort_by(goals, fn goal ->
+      {
+        goal["losedate"],
+        goal["pledge"],
+        goal["slug"]
+      }
+    end)
   end
 
   defp goal_cache_is_up_to_date?(goals, new_user, old_user) do
