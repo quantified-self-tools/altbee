@@ -7,6 +7,7 @@ defmodule AltbeeWeb.GoalLive do
   @datapoint_number_parse_error_msg "Your datapoint should be a number."
   @datapoint_time_parse_error_msg "Your datapoint should be a number or a time."
   @datapoint_empty_msg "Enter a value for your datapoint."
+  @datapoint_too_big_msg "Your datapoint must be less than 3,486,784,401"
 
   alias Altbee.{Datapoints, Goals}
   import Altbee.Datapoints, only: [parse_datapoint: 1]
@@ -53,16 +54,20 @@ defmodule AltbeeWeb.GoalLive do
     socket =
       case parse_datapoint(value) do
         {:ok, value} ->
-          access_token = socket.assigns.user.access_token
-          slug = socket.assigns.slug
+          if value >= 3_486_784_401 do
+            assign(socket, :datapoint_parse_error, @datapoint_too_big_msg)
+          else
+            access_token = socket.assigns.user.access_token
+            slug = socket.assigns.slug
 
-          enqueue_goal_poll(socket)
+            enqueue_goal_poll(socket)
 
-          Datapoints.submit_datapoint!(slug, access_token, daystamp, value, comment)
+            Datapoints.submit_datapoint!(slug, access_token, daystamp, value, comment)
 
-          socket
-          |> assign(:datapoint_parse_error, nil)
-          |> assign(:waiting, true)
+            socket
+            |> assign(:datapoint_parse_error, nil)
+            |> assign(:waiting, true)
+          end
 
         {:error, :empty} ->
           assign(socket, :datapoint_parse_error, @datapoint_empty_msg)
