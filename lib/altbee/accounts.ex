@@ -1,6 +1,4 @@
 defmodule Altbee.Accounts do
-  @beeminder_user_data_url Application.compile_env(:altbee, :user_data_url)
-
   require Logger
   use Retry.Annotation
 
@@ -8,6 +6,8 @@ defmodule Altbee.Accounts do
   alias Altbee.Repo
 
   alias Altbee.Accounts.User
+
+  @beeminder_user_data_url Application.compile_env(:altbee, :user_data_url)
 
   def refresh_user_async(%User{} = user) do
     pid = self()

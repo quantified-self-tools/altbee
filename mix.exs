@@ -38,7 +38,6 @@ defmodule Altbee.MixProject do
       {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.15.0"},
-      {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_dashboard, "~> 0.4.0"},
@@ -55,7 +54,9 @@ defmodule Altbee.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:retry, "~> 0.14"},
       {:bagg,
-       github: "quantified-self-tools/bagg", ref: "2fe6ebfa1ffd583268630561c137a93569b44f65"}
+       github: "quantified-self-tools/bagg", ref: "2fe6ebfa1ffd583268630561c137a93569b44f65"},
+      {:floki, "~> 0.29.0"},
+      {:html5ever, "~> 0.8.0"}
     ]
   end
 

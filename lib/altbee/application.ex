@@ -15,6 +15,13 @@ defmodule Altbee.Application do
         id: :goals_cache
       )
 
+    tags_cache =
+      Supervisor.child_spec(
+        {Cachex,
+         name: :tags_cache, expiration: expiration(default: :timer.hours(24 * 14)), limit: 5_000},
+        id: :tags_cache
+      )
+
     assets_subresource_cache =
       Supervisor.child_spec({Cachex, name: :assets_subresource_cache, limit: 10},
         id: :assets_subresource_cache
@@ -27,6 +34,7 @@ defmodule Altbee.Application do
       AltbeeWeb.Endpoint,
       {Finch, name: AltbeeFinch},
       goals_cache,
+      tags_cache,
       assets_subresource_cache
     ]
 

@@ -2,7 +2,7 @@ defmodule AltbeeWeb.HomeLive do
   use AltbeeWeb, :live_view
 
   alias __MODULE__.GridComponent
-  alias Altbee.{Accounts, Goals}
+  alias Altbee.{Accounts, Goals, Tags}
   import Goals.Color, only: [goal_color: 1]
 
   def mount(_params, %{"user_id" => user_id}, socket) do
@@ -12,12 +12,16 @@ defmodule AltbeeWeb.HomeLive do
 
         if connected?(socket) do
           Accounts.refresh_user_async(user)
+          Tags.refresh_tags_async(user)
         end
 
         goals_from_cache = sort_goals(Goals.load_goals_from_cache(user))
 
+        tags_from_cache = Tags.load_tags_from_cache(user)
+
         socket
         |> assign(:goals, goals_from_cache)
+        |> assign(:tags, tags_from_cache)
         |> assign(:filters, [])
         |> recalculate_filters()
         |> assign(:page_title, "Goals")
@@ -26,15 +30,16 @@ defmodule AltbeeWeb.HomeLive do
     {:ok, socket}
   end
 
-  defp filter_goals(goals, filters) do
+  defp filter_goals(goals, tags, filters) do
     goals
     |> Enum.filter(fn goal ->
-      fields = [
-        normalize_string(goal["slug"]),
-        normalize_string(goal["title"]),
-        normalize_string(goal["gunits"]),
-        to_string(goal_color(goal["safebuf"]))
-      ]
+      fields =
+        [
+          normalize_string(goal["slug"]),
+          normalize_string(goal["title"]),
+          normalize_string(goal["gunits"]),
+          to_string(goal_color(goal["safebuf"]))
+        ] ++ Map.get(tags, goal["slug"], [])
 
       filters
       |> Enum.all?(fn filter ->
@@ -77,17 +82,19 @@ defmodule AltbeeWeb.HomeLive do
 
   def handle_event("refresh", _, socket) do
     Accounts.refresh_user_async(socket.assigns.user)
+    Tags.refresh_tags_async(socket.assigns.user)
 
     socket =
       socket
       |> assign(:goals, [])
+      |> assign(:filters, [])
       |> recalculate_filters()
 
     {:noreply, socket}
   end
 
-  defp recalculate_filters(%{assigns: %{goals: goals, filters: filters}} = socket) do
-    assign(socket, :filtered_goals, filter_goals(goals, filters))
+  defp recalculate_filters(%{assigns: %{goals: goals, filters: filters, tags: tags}} = socket) do
+    assign(socket, :filtered_goals, filter_goals(goals, tags, filters))
   end
 
   defp normalize_string(nil), do: ""
@@ -142,6 +149,15 @@ defmodule AltbeeWeb.HomeLive do
     socket =
       socket
       |> assign(:goals, goals)
+      |> recalculate_filters()
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:tags, tags}, socket) do
+    socket =
+      socket
+      |> assign(:tags, tags)
       |> recalculate_filters()
 
     {:noreply, socket}

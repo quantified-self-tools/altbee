@@ -27,7 +27,8 @@ config :altbee,
 config :altbee,
   goals_base_url: "https://www.beeminder.com/api/v1/users/me/goals",
   user_data_url: "https://www.beeminder.com/api/v1/users/me.json",
-  user_base_url: "https://www.beeminder.com/api/v1/users/me"
+  user_base_url: "https://www.beeminder.com/api/v1/users/me",
+  root_url: "https://www.beeminder.com"
 
 # Configures the endpoint
 config :altbee, AltbeeWeb.Endpoint,
@@ -44,6 +45,8 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :floki, :html_parser, Floki.HTMLParser.Html5ever
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
