@@ -13,6 +13,8 @@ defmodule Altbee.Accounts.User do
     field(:username, :string)
     field(:goals, {:array, :string})
 
+    has_many(:goal_groups, Altbee.Goals.GoalGroup)
+
     timestamps()
   end
 

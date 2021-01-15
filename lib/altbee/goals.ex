@@ -3,8 +3,11 @@ defmodule Altbee.Goals do
 
   require Logger
   use Retry.Annotation
+  import Ecto.Query
+  alias Altbee.Repo
 
   alias Altbee.Accounts.User
+  alias __MODULE__.GoalGroup
 
   def load_goals_async(%User{goals: goals, access_token: token} = user) do
     pid = self()
@@ -78,5 +81,13 @@ defmodule Altbee.Goals do
 
     Finch.build(:get, goal_url)
     |> Altbee.Finch.request_json()
+  end
+
+  def load_groups(user) do
+    from(group in GoalGroup,
+      where: group.user_id == ^user.id,
+      order_by: [asc: group.order, asc: group.inserted_at]
+    )
+    |> Repo.all()
   end
 end

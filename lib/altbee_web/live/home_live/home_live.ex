@@ -23,6 +23,7 @@ defmodule AltbeeWeb.HomeLive do
         |> assign(:goals, goals_from_cache)
         |> assign(:tags, tags_from_cache)
         |> assign(:filters, [])
+        |> assign(:goal_groups, Goals.load_groups(user))
         |> recalculate_filters()
         |> assign(:page_title, "Goals")
       end)
@@ -199,5 +200,43 @@ defmodule AltbeeWeb.HomeLive do
         MapSet.new(Enum.map(goals, & &1["slug"])),
         MapSet.new(new_user.goals)
       )
+  end
+
+  def sectioned_goals(filtered_goals, goal_groups, tags) do
+    groups =
+      goal_groups
+      |> Enum.map(fn group ->
+        group_tags = MapSet.new(group.tags)
+
+        goals =
+          filtered_goals
+          |> Enum.filter(fn %{"slug" => slug} ->
+            tags
+            |> Map.get(slug, [])
+            |> Enum.any?(fn tag ->
+              MapSet.member?(group_tags, tag)
+            end)
+          end)
+
+        {group.id, group.name, goals}
+      end)
+      |> Enum.filter(fn
+        {_, _, []} -> false
+        _ -> true
+      end)
+
+    grouped_goal_slugs =
+      groups
+      |> Enum.flat_map(fn {_, _, goals} -> goals end)
+      |> Enum.map(fn goal -> goal["slug"] end)
+      |> MapSet.new()
+
+    main_group =
+      {:main, "main",
+       Enum.filter(filtered_goals, fn goal ->
+         !MapSet.member?(grouped_goal_slugs, goal["slug"])
+       end)}
+
+    [main_group | groups]
   end
 end
