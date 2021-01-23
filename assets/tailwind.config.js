@@ -25,6 +25,9 @@ module.exports = {
     extend: {
       textDecoration: ['group-focus'],
       textColor: ['group-focus'],
+      ringWidth: ['hover'],
+      ringColor: ['hover'],
+      backgroundColor: ['active'],
     }
   },
   plugins: [

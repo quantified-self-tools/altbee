@@ -31,6 +31,7 @@ defmodule AltbeeWeb.Router do
 
     live "/", HomeLive, :index
     live "/goal/:slug", GoalLive, :show
+    live "/settings", SettingsLive, :index
   end
 
   scope "/", AltbeeWeb do

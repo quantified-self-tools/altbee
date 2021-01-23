@@ -17,6 +17,10 @@
 
 @tailwind utilities;
 
+.drag-ghost {
+  @apply bg-teal-50 opacity-60 shadow-lg;
+}
+
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
   color: #a94442;

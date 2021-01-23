@@ -17,6 +17,12 @@
         class="mx-1 sm:mx-2 lg:mx-3 inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-gray-800 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition">
         <svg class="h6 w-6" viewBox="0 0 21 21" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 3)"><path d="m8 16c4.4380025 0 8-3.5262833 8-7.96428571 0-4.43800246-3.5619975-8.03571429-8-8.03571429-4.43800245 0-8 3.59771183-8 8.03571429 0 4.43800241 3.56199755 7.96428571 8 7.96428571z"/><path d="m4 8h8"/><path d="m8 12.0563492v-8.0563492z"/></g></svg>
       </a>
+      <%= live_redirect to: Routes.settings_path(@socket, :index),
+        "aria-label": "Settings",
+        class: "mx-1 sm:mx-2 lg:mx-3 inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-gray-800 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition" do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+      <% end %>
+
       <button
         aria-label="Refresh"
         phx-click="refresh"
@@ -39,7 +45,7 @@
 
   <%= for {group_id, group_name, goals} <- sectioned_goals(@filtered_goals, @goal_groups, @tags) do %>
     <%= if group_id != :main do %>
-      <h2 class="font-semibold text-lg text-gray-600">
+      <h2 class="font-semibold text-lg text-gray-600 truncate">
         <%= group_name %>
       </h2>
     <% end %>

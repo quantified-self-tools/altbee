@@ -1,0 +1,183 @@
+<section class="max-w-4xl mx-auto sm:px-6 py-6">
+  <header class="flex w-100 items-center mx-4 sm:mx-0">
+    <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition", "aria-label": "Back" do %>
+      <svg viewBox="0 0 20 20" fill="currentColor" class="chevron-double-left w-6 h-6"><path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+    <% end %>
+
+    <h1 class="mx-auto text-3xl font-bold text-gray-900 pr-6 sm:pr-16">
+      Settings
+    </h1>
+  </header>
+
+  <div class="bg-white shadow rounded-lg mt-6">
+    <div class="px-4 py-6 border-b border-gray-200 sm:px-6">
+      <div class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
+        <div class="ml-4 mt-4 mr-4">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            Goal groups
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">
+            You can choose to section your goals into groups by tags.
+          </p>
+        </div>
+        <div class="ml-4 mt-4 flex-shrink-0">
+          <%= if Enum.empty?(@tags) do %>
+            <a class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" href="https://beeminder.com/tags" target="_blank" rel="noopener">
+              Add tags to your goals
+            </a>
+          <% else %>
+            <button
+              type="button"
+              phx-click="new-goal-group"
+              class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+              New goal group
+            </button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="shadow overflow-hidden sm:rounded-md">
+      <ul
+        id="goal-group-settings-list"
+        phx-hook="Sortable"
+        class="divide-y divide-gray-200">
+        <%= for {id, %{group: group, editing: editing, error: error}} <- Enum.reverse(@goal_groups) do %>
+          <li
+            id="goal-group-<%= id %>"
+            data-group-id="<%= id %>">
+            <form
+              phx-submit="save-goal-group"
+              class="pl-3 pr-6 py-4
+                     flex sm:items-center 
+                     <%= if editing do %>
+                       flex-col sm:flex-row sm:items-center
+                     <% else %>
+                       flex-row items-center
+                     <% end %>
+                     ">
+              <input type="hidden" value="<%= id %>" name="id">
+
+              <%= unless editing, do: drag_handle() %>
+
+              <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <div class="flex text-sm truncate flex-col sm:flex-row ">
+                    <%= if editing do %>
+                      <input
+                        placeholder="name…"
+                        name="name"
+                        maxlength="80"
+                        class="rounded max-w-full"
+                        x-data="{ name: '<%= javascript_escape(group.name) %>' }"
+                        x-model="name"
+                        <%= if group.name == "" do %>
+                          x-init="$el.focus(); $el.scrollIntoView({ block: 'center', behavior: 'smooth'})"
+                        <% end %>
+                        type="text">
+                    <% else %>
+                      <span
+                        class="inline-block max-w-full truncate font-medium text-indigo-600">
+                        <%= group.name %>
+                      </span>
+                    <% end %>
+                    <%= if error do %>
+                      <span
+                        class="inline-block ml-3 text-red-700 truncate">
+                        <%= error %>
+                      </span>
+                    <% end %>
+                  </div>
+                  <div class="mt-4 flex"
+                       id="goal-group-tags-<%= unique_id() %>"
+                       <%= if !group.tags || Enum.empty?(group.tags) do %>
+                         x-init="numNewTags++"
+                       <% end %>
+                       x-data="{numNewTags: []}"> <!-- This is a really dumb hack,
+                       to be used until https://github.com/alpinejs/alpine/pull/1021 is merged.
+                       Remember: using the ++ operator on an Array turns it into a number! -->
+                    <div class="flex items-center text-sm text-gray-500">
+                      <svg class="w-6 h-6 text-indigo-900 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                      <ul class="ml-2 flex flex-wrap items-center">
+                        <%= for tag <- group.tags || [] do %>
+                          <%= if editing do %>
+                            <li class="ml-2 my-1">
+                              <select
+                                name="tags[]">
+                                <option value="">&mdash;</option>
+                                <%= for tag_option <- @tags do %>
+                                  <option 
+                                    <%= if tag_option == tag, do: "selected" %>
+                                    value="<%= tag_option %>"><%= tag_option %></option>
+                                <% end %>
+                              </select>
+                            </li>
+                          <% else %>
+                            <li class="ml-2 my-1 px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                              <%= tag %>
+                            </li>
+                          <% end %>
+                        <% end %>
+
+                        <%= if editing do %>
+                          <template
+                            x-for="ix in numNewTags"
+                            :key="ix">
+                            <li class="ml-2 my-1">
+                              <select
+                                name="tags[]">
+                                <option value="">&mdash;</option>
+                                <%= for tag_option <- @tags do %>
+                                  <option 
+                                    value="<%= tag_option %>"><%= tag_option %></option>
+                                <% end %>
+                              </select>
+                            </li>
+                          </template>
+                          <button
+                            @click="numNewTags++"
+                            class="ml-2 h-6 w-6 inline-flex items-center rounded-full shadow-sm text-indigo-900 hover:bg-indigo-100 focus:bg-indigo-50 active:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            aria-label="Add a new tag to this group"
+                            type="button">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                          </button>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ml-6 flex-shrink-0 flex justify-center mt-4 sm:mt-0">
+                <%= if editing do %>
+                  <button
+                    type="button"
+                    id="delete-<%= id %>"
+                    phx-click="delete-goal-group"
+                    phx-value-id="<%= id %>"
+                    class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-full shadow-sm bg-white text-red-500 hover:bg-red-50 active:bg-red-100 active:text-red-700 focus:outline-none hover:ring-2 focus:ring-2 hover:ring-red-400 focus:ring-red-500">
+                    Delete
+                  </button>
+                  <button
+                    type="submit"
+                    id="submit-<%= id %>"
+                    class="ml-4 inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Save
+                  </button>
+                <% else %>
+                  <button
+                    type="button"
+                    arial-label="Edit"
+                    phx-click="edit-goal-group"
+                    phx-value-id="<%= id %>"
+                    class="inline-flex items-center p-3 border border-transparent rounded-full shadow-sm text-white bg-indigo-50 hover:border hover:border-gray-500 hover:bg-indigo-100 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg class="w-5 h-5 text-indigo-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                  </button>
+                <% end %>
+              </div>
+            </form>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</section>
