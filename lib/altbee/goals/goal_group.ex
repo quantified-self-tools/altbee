@@ -22,12 +22,15 @@ defmodule Altbee.Goals.GoalGroup do
     |> cast(attrs, [:tags, :order, :name, :user_id])
     |> validate_required([:tags, :order, :name, :user_id])
     |> update_change(:name, &String.trim/1)
-    |> update_change(:tags, &filter_tags/1)
+    |> update_change(:tags, &update_tags/1)
     |> validate_length(:tags, min: 1)
     |> validate_length(:name, max: 80)
   end
 
-  def filter_tags(tags) do
-    Enum.filter(tags, fn tag -> tag != "" end)
+  def update_tags(tags) do
+    tags
+    |> Enum.filter(fn tag -> tag != "" end)
+    |> Enum.sort()
+    |> Enum.uniq()
   end
 end
