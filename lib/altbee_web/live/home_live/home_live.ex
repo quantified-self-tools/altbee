@@ -234,7 +234,7 @@ defmodule AltbeeWeb.HomeLive do
     main_group =
       {:main, "main",
        Enum.filter(filtered_goals, fn goal ->
-         !MapSet.member?(grouped_goal_slugs, goal["slug"])
+         goal["roadstatuscolor"] == "red" || !MapSet.member?(grouped_goal_slugs, goal["slug"])
        end)}
 
     [main_group | groups]
