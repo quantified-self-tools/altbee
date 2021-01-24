@@ -14,23 +14,19 @@
       <div class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
         <div class="ml-4 mt-4 mr-4">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Goal groups
+            Goal categories
           </h3>
           <p class="mt-1 text-sm text-gray-500">
-            You can choose to section your goals into groups by tags.
+            Instead of showing all your goals in one big list, you can define categories for them, with the goals in each category listed in separate sections of the home page. Each category comprises all the goals which have one or more of that category's tags.
           </p>
         </div>
-        <div class="ml-4 mt-4 flex-shrink-0">
-          <%= if Enum.empty?(@tags) do %>
-            <a class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500" href="https://beeminder.com/tags" target="_blank" rel="noopener">
-              Add tags to your goals
-            </a>
-          <% else %>
+        <div class="ml-4 sm:ml-5 mt-4 flex-shrink-0">
+          <%= unless Enum.empty?(@tags) do %>
             <button
               type="button"
               phx-click="new-goal-group"
               class="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-              New goal group
+              New goal category
             </button>
           <% end %>
         </div>
@@ -49,7 +45,7 @@
             <form
               phx-submit="save-goal-group"
               class="pl-3 pr-6 py-4
-                     flex sm:items-center 
+                     flex sm:items-center
                      <%= if editing do %>
                        flex-col sm:flex-row sm:items-center
                      <% else %>
@@ -65,7 +61,7 @@
                   <div class="flex text-sm truncate flex-col sm:flex-row ">
                     <%= if editing do %>
                       <input
-                        placeholder="name…"
+                        placeholder="Category name…"
                         name="name"
                         maxlength="80"
                         class="rounded max-w-full"
@@ -103,10 +99,11 @@
                           <%= if editing do %>
                             <li class="ml-2 my-1">
                               <select
+                                class="rounded-sm"
                                 name="tags[]">
                                 <option value="">&mdash;</option>
                                 <%= for tag_option <- @tags do %>
-                                  <option 
+                                  <option
                                     <%= if tag_option == tag, do: "selected" %>
                                     value="<%= tag_option %>"><%= tag_option %></option>
                                 <% end %>
@@ -125,10 +122,11 @@
                             :key="ix">
                             <li class="ml-2 my-1">
                               <select
+                                class="rounded-sm"
                                 name="tags[]">
                                 <option value="">&mdash;</option>
                                 <%= for tag_option <- @tags do %>
-                                  <option 
+                                  <option
                                     value="<%= tag_option %>"><%= tag_option %></option>
                                 <% end %>
                               </select>
@@ -178,6 +176,10 @@
           </li>
         <% end %>
       </ul>
+
+      <%= if Enum.empty?(@goal_groups) do %>
+        <%= live_component @socket, NoGoalGroupsComponent, has_tags: !Enum.empty?(@tags) %>
+      <% end %>
     </div>
   </div>
 </section>

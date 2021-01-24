@@ -7,6 +7,8 @@ defmodule AltbeeWeb.SettingsLive do
   alias Altbee.Goals.GoalGroup
   alias Altbee.Repo
 
+  alias __MODULE__.NoGoalGroupsComponent
+
   defmodule GoalGroupState do
     defstruct [:group, :editing, :error]
 
