@@ -1,4 +1,4 @@
-<ul class="my-3 sm:my-6 mx-4 grid grid-cols-1 gap-3 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+<ul class="my-3 sm:my-6 mx-4 grid grid-cols-1 gap-3 md:gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
   <%= for goal <- @goals do %>
     <%= live_component @socket, GoalComponent, id: "#{@id}-#{goal["id"]}", goal: goal, user: @user %>
   <% end %>
