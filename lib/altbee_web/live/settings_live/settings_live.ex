@@ -7,7 +7,7 @@ defmodule AltbeeWeb.SettingsLive do
   alias Altbee.Goals.GoalGroup
   alias Altbee.Repo
 
-  alias __MODULE__.NoGoalGroupsComponent
+  alias __MODULE__.{GoalGroupComponent, NoGoalGroupsComponent}
 
   defmodule GoalGroupState do
     defstruct [:group, :editing, :error]
@@ -195,17 +195,10 @@ defmodule AltbeeWeb.SettingsLive do
     |> Enum.uniq()
   end
 
-  defp unique_id() do
-    Ecto.UUID.generate()
-  end
-
-  def drag_handle() do
-    ~E"""
-    <div
-      data-drag-handle
-      class="mr-3 text-gray-400">
-      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 16 16"> <path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/> </svg>
-    </div>
-    """
+  def goal_group_assigns(id, state, tags) do
+    state
+    |> Map.from_struct()
+    |> Map.put(:id, id)
+    |> Map.put(:tags, tags)
   end
 end
