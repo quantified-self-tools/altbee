@@ -3,11 +3,20 @@ defmodule Altbee.Application do
   # for more information on OTP Applications
   @moduledoc false
 
+  @beeminder_client_id Application.compile_env(:altbee, :beeminder_client_id)
+
   use Application
 
   import Cachex.Spec, only: [expiration: 1]
 
   def start(_type, _args) do
+    if is_nil(@beeminder_client_id) do
+      raise("""
+        Beeminder client ID is not set.
+        Try compiling with the environment variable BEEMINDER_CLIENT_ID set
+      """)
+    end
+
     goals_cache =
       Supervisor.child_spec(
         {Cachex,

@@ -17,11 +17,7 @@ admins =
 config :altbee,
   ecto_repos: [Altbee.Repo],
   generators: [binary_id: true],
-  beeminder_client_id:
-    System.get_env("BEEMINDER_CLIENT_ID") ||
-      raise("""
-      environment variable BEEMINDER_CLIENT_ID is missing
-      """),
+  beeminder_client_id: System.get_env("BEEMINDER_CLIENT_ID"),
   admin_usernames: admins
 
 config :altbee,
