@@ -46,7 +46,7 @@ defmodule Altbee.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:cachex, "~> 3.3"},
-      {:timex, "~> 3.6.2"},
+      {:timex, "~> 3.7.3"},
       {:distillery, "~> 2.1"},
       {:finch, "~> 0.6.0"},
       {:ecto_psql_extras, "~> 0.4"},
@@ -54,8 +54,8 @@ defmodule Altbee.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:retry, "~> 0.14"},
       {:bagg,
-       github: "quantified-self-tools/bagg", ref: "2fe6ebfa1ffd583268630561c137a93569b44f65"},
-      {:floki, "~> 0.29.0"},
+       github: "quantified-self-tools/bagg", ref: "46675b4fe3c0c8c74bc6084b6c6fb2483a3a1c87"},
+      {:floki, "~> 0.30.0"},
       {:html5ever, "~> 0.8.0"}
     ]
   end
