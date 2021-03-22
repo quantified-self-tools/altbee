@@ -1,8 +1,9 @@
 defmodule AltbeeWeb.HomeLive.GoalDropdownComponent do
   use AltbeeWeb, :live_component
+  alias AltbeeWeb.AddDataComponent
 
   def menu_link_class do
-    "flex items-center px-4 py-2 w-full
+    "flex items-center justify-end px-4 py-2 w-full
     text-sm leading-5 text-gray-700 group
     hover:bg-indigo-500 hover:text-white
     active:bg-indigo-500 active:text-white

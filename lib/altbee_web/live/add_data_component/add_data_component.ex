@@ -68,9 +68,11 @@ defmodule AltbeeWeb.AddDataComponent do
             access_token = socket.assigns.user.access_token
             slug = socket.assigns.goal["slug"]
 
-            send(self(), :new_datapoint)
+            send(self(), {:new_datapoint_entered, slug})
 
             Datapoints.submit_datapoint!(slug, access_token, daystamp, value, comment)
+
+            send(self(), {:new_datapoint_submitted, slug})
 
             socket
             |> assign(:datapoint_parse_error, nil)

@@ -4,6 +4,7 @@ defmodule AltbeeWeb.HomeLive do
   alias __MODULE__.GridComponent
   alias Altbee.{Accounts, Goals, Tags}
   import Goals.Color, only: [goal_color: 1]
+  require Logger
 
   def mount(_params, %{"user_id" => user_id}, socket) do
     socket =
@@ -113,7 +114,7 @@ defmodule AltbeeWeb.HomeLive do
 
   def no_goals_shown_message(%{goals: []} = assigns) do
     ~L"""
-    <div class="w-full flex justify-around mt-16">
+    <div class="flex justify-around w-full mt-16">
       <div class="sk-chase">
         <div class="sk-chase-dot"></div>
         <div class="sk-chase-dot"></div>
@@ -129,8 +130,8 @@ defmodule AltbeeWeb.HomeLive do
   def no_goals_shown_message(%{filtered_goals: []} = assigns) do
     ~L"""
     <div class="flex justify-center">
-      <div class="rounded-md bg-blue-200 py-4 sm:py-5 px-6 sm:px-10 mx-4 max-w-max">
-        <p class="leading-5 text-blue-700">
+      <div class="px-6 py-4 mx-4 bg-blue-200 rounded-md sm:py-5 sm:px-10 max-w-max">
+        <p class="text-blue-700 leading-5">
           You don't have any goals that match this filter.
         </p>
       </div>
@@ -182,6 +183,37 @@ defmodule AltbeeWeb.HomeLive do
       |> recalculate_filters()
 
     {:noreply, socket}
+  end
+
+  def handle_info({:new_datapoint_entered, _slug}, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_info({:new_datapoint_submitted, slug}, socket) do
+    user = socket.assigns.user
+    pid = self()
+
+    Task.start_link(fn ->
+      refetch_goal(pid, user, slug)
+    end)
+
+    {:noreply, socket}
+  end
+
+  def refetch_goal(pid, user, slug) do
+    case Goals.fetch_goal(slug, user.access_token) do
+      {:ok, %{"queued" => true}} ->
+        refetch_goal(pid, user, slug)
+
+      {:ok, new_goal} ->
+        Goals.put_cache(user, new_goal)
+        send(pid, {:goal, new_goal})
+
+      {:error, err} ->
+        msg = Exception.message(err)
+
+        Logger.error("Failed to reload goal #{slug} for #{user.username}: #{msg}")
+    end
   end
 
   def sort_goals(goals) do

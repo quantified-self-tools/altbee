@@ -89,13 +89,17 @@ defmodule AltbeeWeb.GoalLive do
     socket
   end
 
-  def handle_info(:new_datapoint, socket) do
+  def handle_info({:new_datapoint_entered, _slug}, socket) do
     socket =
       socket
       |> assign(:waiting, true)
 
     enqueue_goal_poll()
 
+    {:noreply, socket}
+  end
+
+  def handle_info({:new_datapoint_submitted, _slug}, socket) do
     {:noreply, socket}
   end
 
