@@ -48,14 +48,14 @@ defmodule Altbee.MixProject do
       {:cachex, "~> 3.3"},
       {:timex, "~> 3.7.3"},
       {:distillery, "~> 2.1"},
-      {:finch, "~> 0.6.0"},
+      {:finch, "~> 0.7"},
       {:ecto_psql_extras, "~> 0.4"},
       {:credo, "~> 1.5.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:retry, "~> 0.14"},
       {:bagg,
        github: "quantified-self-tools/bagg", ref: "46675b4fe3c0c8c74bc6084b6c6fb2483a3a1c87"},
-      {:floki, "~> 0.30.0"},
+      {:floki, "~> 0.31"},
       {:html5ever, "~> 0.8.0"}
     ]
   end
