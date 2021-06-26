@@ -69,4 +69,18 @@ defmodule Altbee.Accounts do
   def get_user(id) do
     Repo.get(User, id)
   end
+
+  def toggle_layout_mode(%User{layout_mode: mode} = user) do
+    new_mode =
+      case mode do
+        :compact -> :spacious
+        :spacious -> :compact
+      end
+
+    user
+    |> User.changeset(%{
+      layout_mode: new_mode
+    })
+    |> Repo.update!(returning: true)
+  end
 end

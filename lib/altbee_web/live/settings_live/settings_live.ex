@@ -58,6 +58,11 @@ defmodule AltbeeWeb.SettingsLive do
     {:noreply, socket}
   end
 
+  def handle_event("toggle-layout-mode", _, socket) do
+    user = Accounts.toggle_layout_mode(socket.assigns.user)
+    {:noreply, assign(socket, :user, user)}
+  end
+
   def handle_event("new-goal-group", _, socket) do
     goal_groups = socket.assigns.goal_groups
 
@@ -201,4 +206,6 @@ defmodule AltbeeWeb.SettingsLive do
     |> Map.put(:id, id)
     |> Map.put(:tags, tags)
   end
+
+  def compact?(user), do: user.layout_mode == :compact
 end

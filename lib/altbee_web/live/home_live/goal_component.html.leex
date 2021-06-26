@@ -2,13 +2,11 @@
   <%= live_component @socket, GoalGraphComponent, safebuf: @goal["safebuf"], graph: Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"]), slug: @goal["slug"], won: @goal["won"] %>
 
   <div class="flex items-center justify-between flex-1 overflow-hidden bg-white border-t border-b border-r border-gray-300 rounded-r-md">
-    <%= live_redirect to: Routes.goal_path(@socket, :show, @goal["slug"]), class: "flex-1 px-4 py-2 text-sm leading-5 truncate focus:outline-none group" do %>
-      <span class="font-medium text-gray-900 group-hover:text-gray-600 transition group-focus:underline"><%= @goal["slug"] %></span>
+    <%= live_redirect to: Routes.goal_path(@socket, :show, @goal["slug"]), class: "flex-1 pl-3 py-2 text-sm leading-5 truncate focus:outline-none group" do %>
+      <span class="inline-block font-medium text-gray-900 group-hover:text-gray-600 transition group-focus:underline"><%= @goal["slug"] %></span>
 
-      <%= if @goal["todayta"] do %>
-        <svg class="inline-block w-4 h-4 mb-1 ml-1 text-gray-400 opacity-50" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-      <% end %>
-
+      <%= todayta(@goal) %>
+      
       <%= if @goal["won"] do %>
         <p class="text-gray-500 group-hover:text-gray-500 transition">
           Completed

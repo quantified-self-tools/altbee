@@ -11,6 +11,7 @@ defmodule Altbee.Accounts.User do
     field(:beeminder_updated, :utc_datetime)
     field(:timezone, :string)
     field(:username, :string)
+    field(:layout_mode, Ecto.Enum, values: [:compact, :spacious])
     field(:goals, {:array, :string})
 
     has_many(:goal_groups, Altbee.Goals.GoalGroup)
@@ -21,7 +22,7 @@ defmodule Altbee.Accounts.User do
   @doc false
   def changeset(user, attrs \\ %{}) do
     user
-    |> cast(attrs, [:username, :access_token, :timezone, :beeminder_updated, :goals])
+    |> cast(attrs, [:username, :access_token, :timezone, :beeminder_updated, :goals, :layout_mode])
     |> validate_required([:username, :access_token, :timezone, :beeminder_updated, :goals])
   end
 end
