@@ -90,18 +90,4 @@ defmodule AltbeeWeb.AddDataComponent do
 
     {:noreply, socket}
   end
-
-  def handle_event("new-datapoint-change", %{"value" => value}, socket) do
-    socket =
-      if socket.assigns.datapoint_parse_error do
-        case parse_datapoint(value) do
-          {:ok, _} -> assign(socket, :datapoint_parse_error, nil)
-          {:error, _} -> socket
-        end
-      else
-        socket
-      end
-
-    {:noreply, socket}
-  end
 end

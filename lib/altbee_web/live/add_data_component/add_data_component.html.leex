@@ -2,8 +2,7 @@
   class="p-4 overflow-hidden bg-white rounded-lg shadow sm:col-start-2 md:col-start-auto col-span-6 sm:col-span-4 md:col-span-2"
     @submit="$dispatch('datapoint-added', { value })"
     phx-target="<%= @myself %>"
-    phx-submit="new-datapoint"
-    phx-change="new-datapoint-change">
+    phx-submit="new-datapoint">
   <div class="flex justify-center">
     <h2 class="text-xl font-semibold text-gray-700">
       Enter Data
