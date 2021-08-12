@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 host =
   System.get_env("ALTBEE_HOST") ||
