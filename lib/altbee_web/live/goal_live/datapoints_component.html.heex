@@ -1,0 +1,67 @@
+<div class="divide-y divide-gray-300">
+  <%= for datapoint <- @datapoints do %>
+    <form
+      id={"datapoint-#{datapoint["id"]["$oid"]}"}
+      class="flex flex-col items-center py-4 md:flex-row space-y-3 md:space-y-0"
+      phx-submit="update-datapoint"
+      x-data="{show: true, confirmDelete: false}"
+      x-show="show"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 transform scale-90"
+      x-transition:enter-end="opacity-100 transform scale-100"
+      x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="opacity-100 transform scale-100"
+      x-transition:leave-end="opacity-0 transform scale-90"
+      autocomplete="no">
+      <input type="hidden" name="id" value={datapoint["id"]["$oid"]}>
+
+      <div class="flex">
+        <input
+          class="w-32 px-4 mx-2 bg-gray-100 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 sm:text-sm sm:leading-5 sm:px-5"
+          name="daystamp"
+          autocomplete="no"
+          type="text"
+          disabled="disabled"
+          placeholder={display_daystamp(datapoint["daystamp"])}
+          value={display_daystamp(datapoint["daystamp"])}>
+
+        <input
+          class="w-20 px-4 mx-2 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 sm:text-sm sm:leading-5"
+          name="value"
+          autocomplete="no"
+          type="text"
+          inputmode="decimal"
+          placeholder={display_value(datapoint["value"])}
+          value={display_value(datapoint["value"])}>
+      </div>
+
+      <input
+        class="flex-grow w-full max-w-sm mx-2 border-gray-300 md:w-auto rounded-md focus:ring-indigo-200 focus:border-indigo-200 sm:text-sm sm:leading-5"
+        name="comment"
+        autocomplete="no"
+        type="text"
+        placeholder={datapoint["comment"]}
+        value={datapoint["comment"]}>
+
+      <div class="flex space-x-6 md:ml-auto md:mr-6">
+        <div class="flex rounded-md shadow-sm">
+          <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-purple-800 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 ring-opacity-50 active:text-gray-800 active:bg-gray-50 transition">
+            Update
+          </button>
+        </div>
+
+        <div class="flex rounded-md shadow-sm">
+          <button
+            type="button"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-4 rounded-md hover:text-red-700 focus:outline-none focus:border-blue-300 focus:ring ring-blue-200 ring-opacity-50 active:text-gray-800 active:bg-gray-50 transition"
+            @click="confirmDelete = true">
+            Delete
+          </button>
+          <div x-show="confirmDelete" x-cloak>
+            <%= live_component @socket, ConfirmDatapointDeleteComponent, datapoint: datapoint %>
+          </div>
+        </div>
+      </div>
+    </form>
+  <% end %>
+</div>

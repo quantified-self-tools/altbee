@@ -1,8 +1,8 @@
 <form
   class="p-4 overflow-hidden bg-white rounded-lg shadow sm:col-start-2 md:col-start-auto col-span-6 sm:col-span-4 md:col-span-2"
     @submit="$dispatch('datapoint-added', { value })"
-    id="<%= @id %>-form"
-    phx-target="<%= @myself %>"
+    id={"#{@id}-form"}
+    phx-target={@myself}
     phx-submit="new-datapoint">
   <div class="flex justify-center">
     <h2 class="text-xl font-semibold text-gray-700">
@@ -15,9 +15,9 @@
       Date
     </label>
 
-    <select id="<%= @id %>-daystamp" name="daystamp" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 leading-6 focus:border-blue-300 sm:text-sm sm:leading-5">
+    <select id={"#{@id}-daystamp"} name="daystamp" class="block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 leading-6 focus:border-blue-300 sm:text-sm sm:leading-5">
       <%= for i <- 0..4 do %>
-        <option value="<%= daystamp_from_diff(i, @user.timezone, @goal["deadline"]) %>">
+        <option value={daystamp_from_diff(i, @user.timezone, @goal["deadline"])}>
           <%= day_text_from_diff(i, @user.timezone, @goal["deadline"]) %>
         </option>
       <% end %>
@@ -30,14 +30,14 @@
     </label>
     <div class="relative flex mt-2 rounded-md shadow-sm" x-data="{value: null}">
       <input
-        id="<%= @id %>-value"
+        id={"#{@id}-value"}
         name="value"
         type="text"
         x-model="value"
         autocomplete="no"
         inputmode="decimal"
         maxlength="11"
-        placeholder="<%= new_data_placeholder(@goal) %>"
+        placeholder={new_data_placeholder(@goal)}
         class="flex-1 block w-full min-w-0 mx-2 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
         <div class="absolute inset-y-0 right-0 flex items-center pr-3">
           <%= if @datapoint_parse_error do %>
@@ -62,7 +62,7 @@
         </div>
     </div>
     <%= if @datapoint_parse_error do %>
-      <p class="mt-2 text-sm text-center text-red-600" id="<%= @id %>-email-error">
+      <p class="mt-2 text-sm text-center text-red-600" id={"#{@id}-email-error"}>
         <%= @datapoint_parse_error %>
       </p>
     <% end %>
@@ -73,11 +73,12 @@
       Comment (optional):
     </label>
     <div class="flex mt-2 rounded-md shadow-sm">
-      <input id="<%= @id %>-comment"
-             type="text"
-             name="comment"
-             class="flex-1 block w-full min-w-0 mx-2 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-             autocomplete="no">
+      <input
+        id={"#{@id}-comment"}
+        type="text"
+        name="comment"
+        class="flex-1 block w-full min-w-0 mx-2 border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+        autocomplete="no">
     </div>
   </div>
 

@@ -10,14 +10,14 @@
     <%= live_title_tag assigns[:page_title] || "Altbee", suffix: " · Altbee" %>
 
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" crossorigin="anonymous">
-    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/css/app.css")}>
 
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
-    <script defer async phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <script defer async phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/js/app.js")}></script>
   </head>
-  <body class="text-gray-900 antialiased min-h-screen">
+  <body class="min-h-screen antialiased text-gray-900">
     <main>
       <%= @inner_content %>
     </main>

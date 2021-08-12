@@ -25,14 +25,14 @@
         <button
             phx-click="toggle-layout-mode"
             type="button"
-            class="<%= if compact?(@user), do: "bg-indigo-600", else: "bg-gray-200" %> relative inline-flex flex-shrink-0 h-6 border-2 border-transparent rounded-full cursor-pointer w-11 transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class={"#{if compact?(@user), do: "bg-indigo-600", else: "bg-gray-200"} relative inline-flex flex-shrink-0 h-6 border-2 border-transparent rounded-full cursor-pointer w-11 transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}
             role="switch"
-            aria-checked="<%= compact?(@user) %>"
+            aria-checked={compact?(@user)}
             aria-labelledby="layout-mode-label"
             aria-describedby="layout-mode-description">
           <span
               aria-hidden="true"
-              class="<%= if compact?(@user), do: "translate-x-5", else: "translate-x-0" %> inline-block w-5 h-5 bg-white rounded-full shadow pointer-events-none transform ring-0 transition ease-in-out duration-200"></span>
+              class={"#{if compact?(@user), do: "translate-x-5", else: "translate-x-0"} inline-block w-5 h-5 bg-white rounded-full shadow pointer-events-none transform ring-0 transition ease-in-out duration-200"}></span>
         </button>
       </div>
     </div>

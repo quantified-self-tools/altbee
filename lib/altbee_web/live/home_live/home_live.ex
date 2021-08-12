@@ -113,7 +113,7 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def no_goals_shown_message(%{goals: []} = assigns) do
-    ~L"""
+    ~H"""
     <div class="flex justify-around w-full mt-16">
       <div class="sk-chase">
         <div class="sk-chase-dot"></div>
@@ -128,7 +128,7 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def no_goals_shown_message(%{filtered_goals: []} = assigns) do
-    ~L"""
+    ~H"""
     <div class="flex justify-center">
       <div class="px-6 py-4 mx-4 bg-blue-200 rounded-md sm:py-5 sm:px-10 max-w-max">
         <p class="text-blue-700 leading-5">
