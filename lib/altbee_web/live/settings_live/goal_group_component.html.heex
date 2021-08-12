@@ -8,7 +8,7 @@
       flex sm:items-center
       #{if @editing, do: "flex-col sm:flex-row sm:items-center", else: "flex-row items-center"}
       """}>
-    <input type="hidden" value={@id}" name="id">
+    <input type="hidden" value={@id}" name="goal-group-id">
 
     <%= unless @editing, do: drag_handle() %>
 

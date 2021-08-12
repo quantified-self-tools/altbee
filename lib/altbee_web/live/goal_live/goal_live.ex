@@ -35,7 +35,7 @@ defmodule AltbeeWeb.GoalLive do
 
   def handle_event(
         "update-datapoint",
-        %{"value" => value, "comment" => comment, "id" => id},
+        %{"value" => value, "comment" => comment, "datapoint-id" => id},
         socket
       ) do
     send(self(), {:update_datapoint, id, value, comment})

@@ -88,7 +88,7 @@ defmodule AltbeeWeb.SettingsLive do
     {:noreply, socket}
   end
 
-  def handle_event("delete-goal-group", %{"id" => id}, socket) do
+  def handle_event("delete-goal-group", %{"goal-group-id" => id}, socket) do
     goal_groups =
       Enum.flat_map(socket.assigns.goal_groups, fn
         {^id, %{editing: true, group: group} = state} ->
