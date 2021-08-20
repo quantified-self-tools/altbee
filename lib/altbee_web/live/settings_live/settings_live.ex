@@ -116,7 +116,7 @@ defmodule AltbeeWeb.SettingsLive do
     {:noreply, socket}
   end
 
-  def handle_event("save-goal-group", %{"id" => id} = params, socket) do
+  def handle_event("save-goal-group", %{"goal-group-id" => id} = params, socket) do
     goal_groups =
       socket.assigns.goal_groups
       |> Enum.map(fn

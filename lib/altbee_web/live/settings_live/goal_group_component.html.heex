@@ -8,7 +8,7 @@
       flex sm:items-center
       #{if @editing, do: "flex-col sm:flex-row sm:items-center", else: "flex-row items-center"}
       """}>
-    <input type="hidden" value={@id}" name="goal-group-id">
+    <input type="hidden" value={@id} name="goal-group-id">
 
     <%= unless @editing, do: drag_handle() %>
 
@@ -81,7 +81,7 @@
           type="button"
           id={"delete-#{@id}"}
           phx-click="delete-goal-group"
-          phx-value-id={@id}
+          phx-value-goal-group-id={@id}
           class="inline-flex items-center px-3 py-1 text-sm font-medium text-red-500 bg-white border border-transparent rounded-full shadow-sm hover:bg-red-50 active:bg-red-100 active:text-red-700 focus:outline-none hover:ring-2 focus:ring-2 hover:ring-red-400 focus:ring-red-500">
           Delete
         </button>
