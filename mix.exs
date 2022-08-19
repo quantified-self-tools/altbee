@@ -33,30 +33,30 @@ defmodule Altbee.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.9"},
+      {:phoenix, "~> 1.6.11"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.16.0"},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_live_view, "~> 0.17"},
+      {:phoenix_html, "~> 3.2"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.5.0"},
+      {:phoenix_live_dashboard, "~> 0.6.5"},
       {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
+      {:telemetry_poller, "~> 0.5"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
+      {:plug_cowboy, "~> 2.5"},
       {:cachex, "~> 3.3"},
-      {:timex, "~> 3.7.3"},
+      {:timex, "~> 3.7.9"},
       {:distillery, "~> 2.1"},
       {:finch, "~> 0.7"},
       {:ecto_psql_extras, "~> 0.4"},
-      {:credo, "~> 1.5.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:retry, "~> 0.14"},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.2", only: [:dev], runtime: false},
+      {:retry, "~> 0.16"},
       {:bagg,
        github: "quantified-self-tools/bagg", ref: "46675b4fe3c0c8c74bc6084b6c6fb2483a3a1c87"},
       {:floki, "~> 0.31"},
-      {:html5ever, "~> 0.8.0"}
+      {:html5ever, "~> 0.13.0"}
     ]
   end
 
