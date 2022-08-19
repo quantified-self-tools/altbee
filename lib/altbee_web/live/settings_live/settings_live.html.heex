@@ -75,12 +75,12 @@
         phx-hook="Sortable"
         class="divide-y divide-gray-200">
         <%= for {id, state} <- Enum.reverse(@goal_groups) do %>
-          <%= live_component  @socket, GoalGroupComponent, goal_group_assigns(id, state, @tags) %>
+          <.live_component module={GoalGroupComponent} {goal_group_assigns(id, state, @tags)} />
         <% end %>
       </ul>
 
       <%= if Enum.empty?(@goal_groups) do %>
-        <%= live_component @socket, NoGoalGroupsComponent, has_tags: !Enum.empty?(@tags) %>
+        <.live_component module={NoGoalGroupsComponent} id="no-goal-groups" has_tags={!Enum.empty?(@tags)} />
       <% end %>
     </div>
   </div>

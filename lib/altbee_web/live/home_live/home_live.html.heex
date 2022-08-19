@@ -50,7 +50,7 @@
       </h2>
     <% end %>
 
-    <%= live_component @socket, GridComponent, goals: goals, user: @user, group_id: group_id, id: "goals-grid-#{group_id}" %>
+    <.live_component module={GridComponent} goals={goals} user={@user} group_id={group_id} id={"goals-grid-#{group_id}"} />
   <% end %>
 
   <%= no_goals_shown_message(assigns) %>

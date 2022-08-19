@@ -29,7 +29,7 @@
         </a>
 
         <div class="px-1">
-          <%= live_component @socket, AddDataComponent, id: "add-data-#{@group_id}-#{@goal["slug"]}", goal: @goal, user: @user %>
+          <.live_component module={AddDataComponent} id={"add-data-#{@group_id}-#{@goal["slug"]}"} goal={@goal} user={@user} />
         </div>
       </div>
     </div>

@@ -58,7 +58,7 @@
             Delete
           </button>
           <div x-show="confirmDelete" x-cloak>
-            <%= live_component @socket, ConfirmDatapointDeleteComponent, datapoint: datapoint %>
+            <.live_component module={ConfirmDatapointDeleteComponent} id={"confirm-delete-datapoint-#{datapoint["id"]["$oid"]}"} datapoint={datapoint} />
           </div>
         </div>
       </div>

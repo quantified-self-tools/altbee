@@ -53,10 +53,10 @@
       <% end %>
     </div>
 
-    <%= live_component @socket, AddDataComponent, id: "add-data", goal: @goal, user: @user %>
+    <.live_component module={AddDataComponent} id="add-data" goal={@goal} user={@user} />
 
     <div class="px-6 py-4 bg-white rounded-lg shadow col-span-6">
-      <%= live_component @socket, DatapointsComponent, id: "datapoints", datapoints: @goal["recent_data"] %>
+      <.live_component module={DatapointsComponent} id="datapoints" datapoints={@goal["recent_data"]} />
     </div>
   </div>
 </article>

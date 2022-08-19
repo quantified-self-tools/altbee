@@ -1,5 +1,5 @@
 <ul class={"mx-4 my-3 sm:my-6 #{grid(@user.layout_mode)}"}>
   <%= for goal <- @goals do %>
-    <%= live_component @socket, GoalComponent, id: "#{@id}-#{goal["id"]}", goal: goal, user: @user, group_id: @group_id %>
+    <.live_component module={GoalComponent} id={"#{@id}-#{goal["id"]}"} goal={goal} user={@user} group_id={@group_id} />
   <% end %>
 </ul>
