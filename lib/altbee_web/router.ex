@@ -29,9 +29,11 @@ defmodule AltbeeWeb.Router do
   scope "/", AltbeeWeb do
     pipe_through [:browser, :auth]
 
-    live "/", HomeLive, :index
-    live "/goal/:slug", GoalLive, :show
-    live "/settings", SettingsLive, :index
+    live_session :default do
+      live "/", HomeLive, :index
+      live "/goal/:slug", GoalLive, :show
+      live "/settings", SettingsLive, :index
+    end
   end
 
   scope "/", AltbeeWeb do
