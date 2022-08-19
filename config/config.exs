@@ -7,6 +7,10 @@
 # General application configuration
 import Config
 
+config :altbee,
+  ecto_repos: [Altbee.Repo],
+  generators: [binary_id: true]
+
 admins =
   System.get_env("ALTBEE_ADMIN_USERNAMES", "")
   |> String.split(",")
@@ -15,10 +19,24 @@ admins =
   |> MapSet.new()
 
 config :altbee,
-  ecto_repos: [Altbee.Repo],
-  generators: [binary_id: true],
   beeminder_client_id: System.get_env("BEEMINDER_CLIENT_ID"),
   admin_usernames: admins
+
+# Configures the endpoint
+config :altbee, AltbeeWeb.Endpoint,
+  url: [host: "localhost"],
+  render_errors: [view: AltbeeWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Altbee.PubSub,
+  live_view: [signing_salt: "pzlNYucz"]
+
+# Configures the mailer
+#
+# By default it uses the "Local" adapter which stores the emails
+# locally. You can see the emails in your browser, at "/dev/mailbox".
+#
+# For production it's recommended to configure a different adapter
+# at the `config/runtime.exs`.
+config :altbee, Altbee.Mailer, adapter: Swoosh.Adapters.Local
 
 config :altbee,
   goals_base_url: "https://www.beeminder.com/api/v1/users/me/goals",
@@ -26,13 +44,31 @@ config :altbee,
   user_base_url: "https://www.beeminder.com/api/v1/users/me",
   root_url: "https://www.beeminder.com"
 
-# Configures the endpoint
-config :altbee, AltbeeWeb.Endpoint,
-  url: [host: "localhost"],
-  secret_key_base: "+9nj22814t5KEIS0PYPr76DLYiOTPunCoSFzVq49it46XT6cCSn/c0LWCsDubTok",
-  render_errors: [view: AltbeeWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Altbee.PubSub,
-  live_view: [signing_salt: "uBmvBpE2"]
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.41",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ],
+  sw: [
+    args: ~w(js/sw.js --bundle --target=es2017 --outdir=../priv/static/),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :tailwind,
+  version: "3.1.6",
+  default: [
+    args: ~w(
+    --config=tailwind.config.js
+    --input=css/app.css
+    --output=../priv/static/assets/app.css
+  ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -43,6 +79,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :floki, :html_parser, Floki.HTMLParser.Html5ever
+config :html5ever, Html5ever, build_from_source: true
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

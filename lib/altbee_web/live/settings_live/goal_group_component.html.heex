@@ -49,7 +49,7 @@
               <%= if @editing do %>
                 <template
                   x-for="ix in numNewTags"
-                  :key="ix">
+                  x-bind:key="ix">
                   <li class="my-1 ml-2">
                     <select
                       class="rounded-sm"
