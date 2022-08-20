@@ -30,6 +30,9 @@ defmodule AltbeeWeb.Endpoint do
     param_key: "request_logger",
     cookie_key: "request_logger"
 
+  plug RemoteIp,
+    headers: ["x-forwarded-for"]
+
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 

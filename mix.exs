@@ -60,7 +60,8 @@ defmodule Altbee.MixProject do
       {:bagg,
        github: "quantified-self-tools/bagg", ref: "46675b4fe3c0c8c74bc6084b6c6fb2483a3a1c87"},
       {:floki, "~> 0.31"},
-      {:html5ever, "~> 0.13.0"}
+      {:html5ever, "~> 0.13.0"},
+      {:remote_ip, "~> 1.0"}
     ]
   end
 
