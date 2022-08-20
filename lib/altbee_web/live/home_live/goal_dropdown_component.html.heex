@@ -1,6 +1,6 @@
 <div
   class="flex-shrink-0 inline-block pr-2 text-left"
-  x-data="{open: false}"
+  x-data="{ open: false }"
   @datapoint-added.window="open = false"
   @click.away="open = false"
 >
@@ -16,8 +16,12 @@
   </div>
 
   <div
-    class="absolute left-0 right-0 z-10 max-w-full mt-1 shadow-lg origin-top-right rounded-md transform sm:w-80 sm:left-auto sm:right-auto sm:-translate-x-64"
+    class="absolute left-0 right-0 z-10 max-w-full mt-1 shadow-lg origin-top-right rounded-md transform sm:w-80 sm:left-auto sm:right-auto"
     x-bind:aria-expanded="open"
+    x-bind:class="(open, (rootBoundingRect => ({
+      'sm:-translate-x-56': rootBoundingRect.x <= 256,
+      'sm:-translate-x-64': rootBoundingRect.x > 256,
+    }))($root.getBoundingClientRect()))"
     x-cloak
     x-show="open"
     x-transition:enter="ease-out duration-100"
