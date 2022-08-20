@@ -1,8 +1,8 @@
 defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
   use AltbeeWeb, :live_component
 
-  def drag_handle() do
-    ~E"""
+  def drag_handle(assigns) do
+    ~H"""
     <div
       data-drag-handle
       class="mr-3 text-gray-400">
@@ -11,40 +11,37 @@ defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
     """
   end
 
-  def error_msg(nil), do: nil
-
-  def error_msg(error) do
-    ~E"""
+  def error_msg(assigns) do
+    ~H"""
     <span
       class="inline-block ml-3 text-red-700 truncate">
-      <%= error %>
+      <%= @error %>
     </span>
     """
   end
 
-  def name(group_name, editing)
 
-  def name(group_name, true) do
-    ~E"""
+  def name(%{editing: true} = assigns) do
+    ~H"""
     <input
       placeholder="Category name…"
       name="name"
       maxlength="80"
-      class="rounded max-w-full"
-      x-data="{ name: '<%= javascript_escape(group_name) %>' }"
+      class="max-w-full rounded"
+      x-data={"{
+        name: '#{javascript_escape(@group_name)}'
+      }"}
       x-model="name"
-      <%= if group_name == "" do %>
-        x-init="$el.focus(); $el.scrollIntoView({ block: 'center', behavior: 'smooth'})"
-      <% end %>
+      x-init={if @group_name == "", do: "$el.focus(); $el.scrollIntoView({ block: 'center', behavior: 'smooth'})"}
       type="text">
     """
   end
 
-  def name(group_name, false) do
-    ~E"""
+  def name(%{editing: false} = assigns) do
+    ~H"""
     <span
-      class="inline-block max-w-full truncate font-medium text-indigo-600">
-      <%= group_name %>
+      class="inline-block max-w-full font-medium text-indigo-600 truncate">
+      <%= @group_name %>
     </span>
     """
   end

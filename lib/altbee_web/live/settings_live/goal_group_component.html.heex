@@ -10,13 +10,17 @@
       """}>
     <input type="hidden" value={@id} name="goal-group-id">
 
-    <%= unless @editing, do: drag_handle() %>
+    <%= unless @editing do %>
+      <.drag_handle />
+    <% end %>
 
     <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
       <div>
         <div class="flex flex-col text-sm truncate sm:flex-row ">
-          <%= name(@group.name, @editing) %>
-          <%= error_msg(@error) %>
+          <.name group_name={@group.name} editing={@editing} />
+          <%= if @error do %>
+            <.error_msg error={@error} />
+          <% end %>
         </div>
         <div class="flex mt-4"
              id={"goal-group-tags-#{unique_id()}"}

@@ -5,7 +5,9 @@
     <%= live_redirect to: Routes.goal_path(@socket, :show, @goal["slug"]), class: "flex-1 pl-3 py-2 text-sm leading-5 truncate focus:outline-none group" do %>
       <span class="inline-block font-medium text-gray-900 group-hover:text-gray-600 transition group-focus:underline"><%= @goal["slug"] %></span>
 
-      <%= todayta(@goal) %>
+      <%= if @goal["todayta"] do %>
+        <.todayta />
+      <% end %>
       
       <%= if @goal["won"] do %>
         <p class="text-gray-500 group-hover:text-gray-500 transition">
