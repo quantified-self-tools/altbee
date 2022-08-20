@@ -1,6 +1,33 @@
 defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
   use AltbeeWeb, :live_component
 
+  def update(assigns, socket) do
+    socket =
+      socket
+      |> assign(assigns)
+
+    socket =
+      if changed?(socket, :editing) do
+        num_new_tags =
+          if !socket.assigns.group.tags || Enum.empty?(socket.assigns.group.tags), do: 1, else: 0
+
+        socket
+        |> assign(:num_new_tags, num_new_tags)
+      else
+        socket
+      end
+
+    {:ok, socket}
+  end
+
+  def handle_event("new-tag", _, socket) do
+    socket =
+      socket
+      |> update(:num_new_tags, &(&1 + 1))
+
+    {:noreply, socket}
+  end
+
   def drag_handle(assigns) do
     ~H"""
     <div data-drag-handle class="mr-3 text-gray-400">
@@ -46,9 +73,5 @@ defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
       <%= @group_name %>
     </span>
     """
-  end
-
-  def unique_id() do
-    Ecto.UUID.generate()
   end
 end

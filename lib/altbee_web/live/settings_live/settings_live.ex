@@ -187,10 +187,9 @@ defmodule AltbeeWeb.SettingsLive do
         String.replace(acc, "%{#{key}}", to_string(value))
       end)
     end)
-    |> Enum.map(fn {key, value} ->
+    |> Enum.map_join(", ", fn {key, value} ->
       "#{key} #{value}"
     end)
-    |> Enum.join(", ")
   end
 
   defp tags_list(tags) do
@@ -198,13 +197,6 @@ defmodule AltbeeWeb.SettingsLive do
     |> Enum.flat_map(fn {_, tags} -> tags end)
     |> Enum.sort()
     |> Enum.uniq()
-  end
-
-  def goal_group_assigns(id, state, tags) do
-    state
-    |> Map.from_struct()
-    |> Map.put(:id, id)
-    |> Map.put(:tags, tags)
   end
 
   def compact?(user), do: user.layout_mode == :compact
