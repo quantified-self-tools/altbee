@@ -27,6 +27,12 @@ defmodule AltbeeWeb.UserController do
   end
 
   defp beeminder_client_id() do
-    Application.fetch_env!(:altbee, :beeminder_client_id)
+    Application.fetch_env!(:altbee, :beeminder_client_id) ||
+      raise """
+        No beeminder client id found.
+        Register a Beeminder app at https://www.beeminder.com/apps/new,
+        and set the environment variable BEEMINDER_CLIENT_ID
+        to be the client id of your app.
+      """
   end
 end

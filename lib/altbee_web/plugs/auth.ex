@@ -3,8 +3,8 @@ defmodule AltbeeWeb.Auth do
   import Phoenix.Controller
 
   alias AltbeeWeb.Router.Helpers, as: Routes
-
   alias Altbee.Accounts
+
   def init(opts), do: opts
 
   def call(conn, _opts) do
