@@ -11,17 +11,6 @@ config :altbee,
   ecto_repos: [Altbee.Repo],
   generators: [binary_id: true]
 
-admins =
-  System.get_env("ALTBEE_ADMIN_USERNAMES", "")
-  |> String.split(",")
-  |> Enum.map(&String.trim/1)
-  |> Enum.filter(&(&1 !== ""))
-  |> MapSet.new()
-
-config :altbee,
-  beeminder_client_id: System.get_env("BEEMINDER_CLIENT_ID"),
-  admin_usernames: admins
-
 # Configures the endpoint
 config :altbee, AltbeeWeb.Endpoint,
   url: [host: "localhost"],

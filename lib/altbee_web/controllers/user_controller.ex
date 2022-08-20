@@ -3,7 +3,6 @@ defmodule AltbeeWeb.UserController do
 
   alias Altbee.Accounts
 
-  @beeminder_client_id Application.compile_env(:altbee, :beeminder_client_id)
   @beeminder_root "https://www.beeminder.com"
 
   def login(conn, %{"username" => _username, "access_token" => token}) do
@@ -22,8 +21,12 @@ defmodule AltbeeWeb.UserController do
 
   defp login_url(conn) do
     "#{@beeminder_root}/apps/authorize?" <>
-      "client_id=#{@beeminder_client_id}" <>
+      "client_id=#{beeminder_client_id()}" <>
       "&redirect_uri=#{Routes.user_url(conn, :login)}" <>
       "&response_type=token"
+  end
+
+  defp beeminder_client_id() do
+    Application.fetch_env!(:altbee, :beeminder_client_id)
   end
 end

@@ -20,6 +20,17 @@ if System.get_env("PHX_SERVER") do
   config :altbee, AltbeeWeb.Endpoint, server: true
 end
 
+admins =
+  System.get_env("ALTBEE_ADMIN_USERNAMES", "")
+  |> String.split(",")
+  |> Enum.map(&String.trim/1)
+  |> Enum.filter(&(&1 !== ""))
+  |> MapSet.new()
+
+config :altbee,
+  beeminder_client_id: System.get_env("BEEMINDER_CLIENT_ID"),
+  admin_usernames: admins
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
