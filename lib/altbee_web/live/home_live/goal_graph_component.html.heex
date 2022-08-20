@@ -1,10 +1,13 @@
-<div class={"flex-shrink-0 flex items-center rounded-l-md w-20 #{if @won, do: "bg-gray-700", else: goal_color_bg_class(goal_color(@safebuf))}"}
-     x-data="{expanded: false}">
+<div
+  class={"flex-shrink-0 flex items-center rounded-l-md w-20 #{if @won, do: "bg-gray-700", else: goal_color_bg_class(goal_color(@safebuf))}"}
+  x-data="{expanded: false}"
+>
   <button @click="expanded = !expanded" class="w-full h-full">
-    <img class="bg-white" src={@graph} alt="">
+    <img class="bg-white" src={@graph} alt="" />
   </button>
   <template x-if="expanded">
-    <div class="fixed inset-0 z-10 flex items-center justify-center w-screen h-screen overflow-hidden bg-gray-400 bg-opacity-75 transition-opacity"
+    <div
+      class="fixed inset-0 z-10 flex items-center justify-center w-screen h-screen overflow-hidden bg-gray-400 bg-opacity-75 transition-opacity"
       @click.self="expanded = false"
       @keyup.document.escape="expanded = false"
       x-transition:enter="ease-in-out duration-150"
@@ -12,25 +15,48 @@
       x-transition:enter-end="opacity-100"
       x-transition:leave="ease-in-out duration-150"
       x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0">
+      x-transition:leave-end="opacity-0"
+    >
       <div class="flex items-center pt-2 h-7">
         <%= live_redirect to: Routes.goal_path(@socket, :show, @slug),
           "aria-label": "Goal",
           class: "text-gray-500 hover:text-gray-600 transition absolute top-0 left-0 mt-6 ml-6 bg-gray-50 rounded-full p-3" do %>
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"></path></svg>
-       <% end %>
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"
+            >
+            </path>
+          </svg>
+        <% end %>
 
         <button
           aria-label="Close"
           class="absolute top-0 right-0 p-3 mt-6 mr-6 text-gray-500 rounded-full hover:text-gray-600 transition bg-gray-50"
-          @click="expanded = false">
-         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
+          @click="expanded = false"
+        >
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
       </div>
 
       <div class="w-full max-w-2xl max-h-screen mx-1 overflow-y-auto bg-white overscroll-contain sm:mx-6">
         <h2 class="w-full py-3 text-2xl font-semibold text-center"><%= @slug %></h2>
-        <img class="px-3 pb-3" src={@graph} alt={"Graph for #{@slug}"}>
+        <img class="px-3 pb-3" src={@graph} alt={"Graph for #{@slug}"} />
       </div>
     </div>
   </template>

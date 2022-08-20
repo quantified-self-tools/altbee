@@ -1,14 +1,13 @@
-<li
-  id={"goal-group-#{@id}"}
-  data-group-id={@id}>
+<li id={"goal-group-#{@id}"} data-group-id={@id}>
   <form
     phx-submit="save-goal-group"
     class={"""
       pl-3 pr-6 py-4
       flex sm:items-center
       #{if @editing, do: "flex-col sm:flex-row sm:items-center", else: "flex-row items-center"}
-      """}>
-    <input type="hidden" value={@id} name="goal-group-id">
+      """}
+  >
+    <input type="hidden" value={@id} name="goal-group-id" />
 
     <%= unless @editing do %>
       <.drag_handle />
@@ -22,24 +21,37 @@
             <.error_msg error={@error} />
           <% end %>
         </div>
-        <div class="flex mt-4"
-             id={"goal-group-tags-#{unique_id()}"}
-             x-init={if !@group.tags || Enum.empty?(@group.tags), do: "numNewTags++", else: "void 0"}
-             x-data="{numNewTags: 0}"> 
+        <div
+          class="flex mt-4"
+          id={"goal-group-tags-#{unique_id()}"}
+          x-init={if !@group.tags || Enum.empty?(@group.tags), do: "numNewTags++", else: "void 0"}
+          x-data="{numNewTags: 0}"
+        >
           <div class="flex items-center text-sm text-gray-500">
-            <svg class="flex-shrink-0 w-6 h-6 text-indigo-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+            <svg
+              class="flex-shrink-0 w-6 h-6 text-indigo-900"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+              >
+              </path>
+            </svg>
             <ul class="flex flex-wrap items-center ml-2">
               <%= for tag <- @group.tags || [] do %>
                 <%= if @editing do %>
                   <li class="my-1 ml-2">
-                    <select
-                      class="rounded-sm"
-                      name="tags[]">
+                    <select class="rounded-sm" name="tags[]">
                       <option value="">&mdash;</option>
                       <%= for tag_option <- @tags do %>
-                        <option
-                          {[selected: tag_option == tag]}
-                          value={tag_option}><%= tag_option %></option>
+                        <option {[selected: tag_option == tag]} value={tag_option}>
+                          <%= tag_option %>
+                        </option>
                       <% end %>
                     </select>
                   </li>
@@ -51,17 +63,12 @@
               <% end %>
 
               <%= if @editing do %>
-                <template
-                  x-for="ix in numNewTags"
-                  x-bind:key="ix">
+                <template x-for="ix in numNewTags" x-bind:key="ix">
                   <li class="my-1 ml-2">
-                    <select
-                      class="rounded-sm"
-                      name="tags[]">
+                    <select class="rounded-sm" name="tags[]">
                       <option value="">&mdash;</option>
                       <%= for tag_option <- @tags do %>
-                        <option
-                          value={tag_option}><%= tag_option %></option>
+                        <option value={tag_option}><%= tag_option %></option>
                       <% end %>
                     </select>
                   </li>
@@ -70,8 +77,23 @@
                   @click="numNewTags++"
                   class="inline-flex items-center w-6 h-6 ml-2 text-indigo-900 rounded-full shadow-sm hover:bg-indigo-100 focus:bg-indigo-50 active:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   aria-label="Add a new tag to this group"
-                  type="button">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                  type="button"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    >
+                    </path>
+                  </svg>
                 </button>
               <% end %>
             </ul>
@@ -86,13 +108,15 @@
           id={"delete-#{@id}"}
           phx-click="delete-goal-group"
           phx-value-goal-group-id={@id}
-          class="inline-flex items-center px-3 py-1 text-sm font-medium text-red-500 bg-white border border-transparent rounded-full shadow-sm hover:bg-red-50 active:bg-red-100 active:text-red-700 focus:outline-none hover:ring-2 focus:ring-2 hover:ring-red-400 focus:ring-red-500">
+          class="inline-flex items-center px-3 py-1 text-sm font-medium text-red-500 bg-white border border-transparent rounded-full shadow-sm hover:bg-red-50 active:bg-red-100 active:text-red-700 focus:outline-none hover:ring-2 focus:ring-2 hover:ring-red-400 focus:ring-red-500"
+        >
           Delete
         </button>
         <button
           type="submit"
           id={"submit-#{@id}"}
-          class="inline-flex items-center px-5 py-2 ml-4 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          class="inline-flex items-center px-5 py-2 ml-4 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
           Save
         </button>
       <% else %>
@@ -101,8 +125,22 @@
           arial-label="Edit"
           phx-click="edit-goal-group"
           phx-value-id={@id}
-          class="inline-flex items-center p-3 text-white border border-transparent rounded-full shadow-sm bg-indigo-50 hover:border hover:border-gray-500 hover:bg-indigo-100 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          <svg class="w-5 h-5 text-indigo-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+          class="inline-flex items-center p-3 text-white border border-transparent rounded-full shadow-sm bg-indigo-50 hover:border hover:border-gray-500 hover:bg-indigo-100 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <svg
+            class="w-5 h-5 text-indigo-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            >
+            </path>
+          </svg>
         </button>
       <% end %>
     </div>

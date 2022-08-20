@@ -10,54 +10,78 @@
     </div>
   </div>
 <% else %>
-<article class="px-4 py-4 sm:px-6">
-  <header class="flex items-center justify-between w-100">
-    <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition", "aria-label": "Back" do %>
-      <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 chevron-double-left"><path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
-    <% end %>
-
-    <div class="flex flex-col items-center leading-tight sm:items-end sm:flex-row">
-      <h1 class="text-3xl font-bold text-gray-900">
-        <%= @slug %>
-      </h1>
-      <h2 class="mx-3 mt-1 text-sm text-center text-gray-500 sm:mt-0 sm:mb-1"
-          title={@goal["limsum"]}>
-          <%= @goal["limsumdate"] %>
-      </h2>
-    </div>
-
-    <button
-      phx-click="refresh"
-      aria-label="Refresh"
-      class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-700 bg-transparent border border-transparent rounded-full leading-6 hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition">
-      <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 refresh"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
-    </button>
-  </header>
-
-  <div class="my-5 grid grid-cols-6 sm:mx-4 lg:mx-6 gap-4 sm:gap-6">
-    <div class={"relative bg-white overflow-hidden shadow rounded-lg max-w-3xl col-span-6 md:col-span-4 #{if waiting?(assigns), do: "bg-opacity-75"}"}>
-      <div class={"px-4 py-5 sm:p-6 #{if waiting?(assigns), do: "opacity-25"}"}>
-        <img src={Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"])} alt={"Graph for #{@goal["slug"]}"}>
-      </div>
-      <%= if waiting?(assigns) do %>
-        <div class="absolute" style="top: calc(50% - 20px); left: calc(50% - 20px)">
-          <div class="sk-chase">
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-          </div>
-        </div>
+  <article class="px-4 py-4 sm:px-6">
+    <header class="flex items-center justify-between w-100">
+      <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition", "aria-label": "Back" do %>
+        <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 chevron-double-left">
+          <path
+            fill-rule="evenodd"
+            d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
+            clip-rule="evenodd"
+          >
+          </path>
+        </svg>
       <% end %>
-    </div>
 
-    <.live_component module={AddDataComponent} id="add-data" goal={@goal} user={@user} />
+      <div class="flex flex-col items-center leading-tight sm:items-end sm:flex-row">
+        <h1 class="text-3xl font-bold text-gray-900">
+          <%= @slug %>
+        </h1>
+        <h2
+          class="mx-3 mt-1 text-sm text-center text-gray-500 sm:mt-0 sm:mb-1"
+          title={@goal["limsum"]}
+        >
+          <%= @goal["limsumdate"] %>
+        </h2>
+      </div>
 
-    <div class="px-6 py-4 bg-white rounded-lg shadow col-span-6">
-      <.live_component module={DatapointsComponent} id="datapoints" datapoints={@goal["recent_data"]} />
+      <button
+        phx-click="refresh"
+        aria-label="Refresh"
+        class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-700 bg-transparent border border-transparent rounded-full leading-6 hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition"
+      >
+        <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 refresh">
+          <path
+            fill-rule="evenodd"
+            d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+            clip-rule="evenodd"
+          >
+          </path>
+        </svg>
+      </button>
+    </header>
+
+    <div class="my-5 grid grid-cols-6 sm:mx-4 lg:mx-6 gap-4 sm:gap-6">
+      <div class={"relative bg-white overflow-hidden shadow rounded-lg max-w-3xl col-span-6 md:col-span-4 #{if waiting?(assigns), do: "bg-opacity-75"}"}>
+        <div class={"px-4 py-5 sm:p-6 #{if waiting?(assigns), do: "opacity-25"}"}>
+          <img
+            src={Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"])}
+            alt={"Graph for #{@goal["slug"]}"}
+          />
+        </div>
+        <%= if waiting?(assigns) do %>
+          <div class="absolute" style="top: calc(50% - 20px); left: calc(50% - 20px)">
+            <div class="sk-chase">
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+              <div class="sk-chase-dot"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <.live_component module={AddDataComponent} id="add-data" goal={@goal} user={@user} />
+
+      <div class="px-6 py-4 bg-white rounded-lg shadow col-span-6">
+        <.live_component
+          module={DatapointsComponent}
+          id="datapoints"
+          datapoints={@goal["recent_data"]}
+        />
+      </div>
     </div>
-  </div>
-</article>
+  </article>
 <% end %>

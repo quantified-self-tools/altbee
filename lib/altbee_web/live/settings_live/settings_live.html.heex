@@ -1,7 +1,14 @@
 <section class="max-w-4xl py-6 mx-auto sm:px-6">
   <header class="flex items-center mx-4 w-100 sm:mx-0">
     <%= live_redirect to: Routes.home_path(@socket, :index), class: "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-full text-gray-700 bg-transparent hover:bg-gray-200 focus:outline-none focus:border-gray-400 active:bg-gray-400 transition", "aria-label": "Back" do %>
-      <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 chevron-double-left"><path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+      <svg viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 chevron-double-left">
+        <path
+          fill-rule="evenodd"
+          d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
+          clip-rule="evenodd"
+        >
+        </path>
+      </svg>
     <% end %>
 
     <h1 class="pr-6 mx-auto text-3xl font-bold text-gray-900 sm:pr-16">
@@ -13,7 +20,9 @@
     <div class="px-4 py-4 border-b border-gray-200 sm:px-6">
       <div class="flex items-center justify-between">
         <span class="flex flex-col flex-grow">
-          <span class="text-sm font-medium text-gray-900" id="layout-mode-label">Compact mode</span>
+          <span class="text-sm font-medium text-gray-900" id="layout-mode-label">
+            Compact mode
+          </span>
           <span class="text-sm text-gray-500" id="layout-mode-description">
             <%= if compact?(@user) do %>
               If you'd prefer a bit more space for each goal, you can disable compact mode.
@@ -23,16 +32,19 @@
           </span>
         </span>
         <button
-            phx-click="toggle-layout-mode"
-            type="button"
-            class={"#{if compact?(@user), do: "bg-indigo-600", else: "bg-gray-200"} relative inline-flex flex-shrink-0 h-6 border-2 border-transparent rounded-full cursor-pointer w-11 transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}
-            role="switch"
-            aria-checked={compact?(@user)}
-            aria-labelledby="layout-mode-label"
-            aria-describedby="layout-mode-description">
+          phx-click="toggle-layout-mode"
+          type="button"
+          class={"#{if compact?(@user), do: "bg-indigo-600", else: "bg-gray-200"} relative inline-flex flex-shrink-0 h-6 border-2 border-transparent rounded-full cursor-pointer w-11 transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}
+          role="switch"
+          aria-checked={compact?(@user)}
+          aria-labelledby="layout-mode-label"
+          aria-describedby="layout-mode-description"
+        >
           <span
-              aria-hidden="true"
-              class={"#{if compact?(@user), do: "translate-x-5", else: "translate-x-0"} inline-block w-5 h-5 bg-white rounded-full shadow pointer-events-none transform ring-0 transition ease-in-out duration-200"}></span>
+            aria-hidden="true"
+            class={"#{if compact?(@user), do: "translate-x-5", else: "translate-x-0"} inline-block w-5 h-5 bg-white rounded-full shadow pointer-events-none transform ring-0 transition ease-in-out duration-200"}
+          >
+          </span>
         </button>
       </div>
     </div>
@@ -54,13 +66,15 @@
               <button
                 type="button"
                 phx-click="new-goal-group"
-                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent shadow-sm rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-purple-600 border border-transparent shadow-sm rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+              >
                 New goal category
               </button>
 
               <a
                 href="https://www.beeminder.com/tags"
-                class="inline-flex items-center px-4 py-2 mt-3 text-sm font-medium text-purple-700 bg-purple-100 border border-transparent rounded-md hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                class="inline-flex items-center px-4 py-2 mt-3 text-sm font-medium text-purple-700 bg-purple-100 border border-transparent rounded-md hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+              >
                 Manage your tags
               </a>
             </div>
@@ -70,17 +84,18 @@
     </div>
 
     <div class="overflow-hidden shadow sm:rounded-md">
-      <ul
-        id="goal-group-settings-list"
-        phx-hook="Sortable"
-        class="divide-y divide-gray-200">
+      <ul id="goal-group-settings-list" phx-hook="Sortable" class="divide-y divide-gray-200">
         <%= for {id, state} <- Enum.reverse(@goal_groups) do %>
           <.live_component module={GoalGroupComponent} {goal_group_assigns(id, state, @tags)} />
         <% end %>
       </ul>
 
       <%= if Enum.empty?(@goal_groups) do %>
-        <.live_component module={NoGoalGroupsComponent} id="no-goal-groups" has_tags={!Enum.empty?(@tags)} />
+        <.live_component
+          module={NoGoalGroupsComponent}
+          id="no-goal-groups"
+          has_tags={!Enum.empty?(@tags)}
+        />
       <% end %>
     </div>
   </div>

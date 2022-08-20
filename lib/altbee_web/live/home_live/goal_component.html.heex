@@ -1,26 +1,43 @@
 <li class="flex shadow col-span-1 rounded-md" id={@id}>
-  <.live_component module={GoalGraphComponent} id={"goal-graph-#{@id}"} safebuf={@goal["safebuf"]} graph={Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"])} slug={@goal["slug"]} won={@goal["won"]} />
+  <.live_component
+    module={GoalGraphComponent}
+    id={"goal-graph-#{@id}"}
+    safebuf={@goal["safebuf"]}
+    graph={Routes.graph_proxy_path(@socket, :index, url: @goal["svg_url"])}
+    slug={@goal["slug"]}
+    won={@goal["won"]}
+  />
 
   <div class="flex items-center justify-between flex-1 overflow-hidden bg-white border-t border-b border-r border-gray-300 rounded-r-md">
     <%= live_redirect to: Routes.goal_path(@socket, :show, @goal["slug"]), class: "flex-1 pl-3 py-2 text-sm leading-5 truncate focus:outline-none group" do %>
-      <span class="inline-block font-medium text-gray-900 group-hover:text-gray-600 transition group-focus:underline"><%= @goal["slug"] %></span>
+      <span class="inline-block font-medium text-gray-900 group-hover:text-gray-600 transition group-focus:underline">
+        <%= @goal["slug"] %>
+      </span>
 
       <%= if @goal["todayta"] do %>
         <.todayta />
       <% end %>
-      
+
       <%= if @goal["won"] do %>
         <p class="text-gray-500 group-hover:text-gray-500 transition">
           Completed
         </p>
       <% else %>
-        <p class="text-gray-500 group-hover:text-gray-500 transition"
-           title={"#{@goal["limsumdate"]} or pay $#{display_value(@goal["contract"]["amount"])}"}>
+        <p
+          class="text-gray-500 group-hover:text-gray-500 transition"
+          title={"#{@goal["limsumdate"]} or pay $#{display_value(@goal["contract"]["amount"])}"}
+        >
           <%= @goal["limsum"] %>
         </p>
       <% end %>
     <% end %>
 
-    <.live_component module={GoalDropdownComponent} id={"goal-dropdown-#{@id}"} goal={@goal} user={@user} group_id={@group_id} />
+    <.live_component
+      module={GoalDropdownComponent}
+      id={"goal-dropdown-#{@id}"}
+      goal={@goal}
+      user={@user}
+      group_id={@group_id}
+    />
   </div>
 </li>

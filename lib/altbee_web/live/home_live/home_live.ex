@@ -110,7 +110,11 @@ defmodule AltbeeWeb.HomeLive do
 
   def no_goals_shown_message(%{goals: [], user: %{goals: []}} = assigns) do
     ~H"""
-    <.live_component module={__MODULE__.EmptyState.NoGoalsAtAllComponent} id="no-goals-shown-message" {@assigns} />
+    <.live_component
+      module={__MODULE__.EmptyState.NoGoalsAtAllComponent}
+      id="no-goals-shown-message"
+      {@assigns}
+    />
     """
   end
 
