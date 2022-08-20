@@ -16,7 +16,7 @@
     <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
       <div>
         <div class="flex flex-col text-sm truncate sm:flex-row ">
-          <.name group_name={@group.name} editing={@editing} />
+          <.name id={@group.id} group_name={@group.name} editing={@editing} />
           <%= if @error do %>
             <.error_msg error={@error} />
           <% end %>

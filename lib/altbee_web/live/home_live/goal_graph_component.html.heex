@@ -1,4 +1,5 @@
 <div
+  id={@id}
   class={"flex-shrink-0 flex items-center rounded-l-md w-20 #{if @won, do: "bg-gray-700", else: goal_color_bg_class(goal_color(@safebuf))}"}
   x-data="{expanded: false}"
 >

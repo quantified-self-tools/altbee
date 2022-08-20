@@ -22,6 +22,7 @@ defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
   def name(%{editing: true} = assigns) do
     ~H"""
     <input
+      id={"group-name-input-#{@id}"}
       placeholder="Category name…"
       name="name"
       maxlength="80"

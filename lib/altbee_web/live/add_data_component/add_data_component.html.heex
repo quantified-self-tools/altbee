@@ -33,7 +33,11 @@
     <label for="value" class="block text-sm font-medium text-gray-700 leading-5">
       Value
     </label>
-    <div class="relative flex mt-2 rounded-md shadow-sm" x-data="{value: null}">
+    <div
+      id={"#{@id}-value-wrapper"}
+      class="relative flex mt-2 rounded-md shadow-sm"
+      x-data="{value: null}"
+    >
       <input
         id={"#{@id}-value"}
         name="value"
