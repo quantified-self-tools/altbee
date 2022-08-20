@@ -1,6 +1,5 @@
 import 'phoenix_html'
 
-import './alpine'
 import './filter'
 import './forms'
 import './live-view'
