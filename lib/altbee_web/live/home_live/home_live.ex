@@ -222,7 +222,7 @@ defmodule AltbeeWeb.HomeLive do
     Enum.sort_by(goals, fn goal ->
       {
         goal["losedate"],
-        goal["pledge"],
+        -goal["pledge"],
         goal["slug"]
       }
     end)
