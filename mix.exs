@@ -58,7 +58,7 @@ defmodule Altbee.MixProject do
       {:rustler, ">= 0.0.0", optional: true},
       {:retry, "~> 0.16"},
       {:bagg,
-       github: "quantified-self-tools/bagg", ref: "46675b4fe3c0c8c74bc6084b6c6fb2483a3a1c87"},
+       github: "quantified-self-tools/bagg", ref: "bc33816682ea26ba9d13173140841c1db164fc23"},
       {:floki, "~> 0.31"},
       {:html5ever, "~> 0.13.0"},
       {:remote_ip, "~> 1.0"}
