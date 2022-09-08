@@ -3,6 +3,10 @@ defmodule AltbeeWeb.GraphProxyController do
 
   alias Altbee.Assets
 
+  def index(conn, %{"url" => "https://cdn.beeminder.com/" <> _path = url}) do
+    proxy_graph(conn, url)
+  end
+
   def index(conn, %{"url" => "https://bmndr.s3.amazonaws.com/" <> _path = url}) do
     proxy_graph(conn, url)
   end
