@@ -100,6 +100,7 @@
       <label for="filter" class="sr-only">Filter</label>
       <input
         type="search"
+        value={@search_term}
         id="filter-goals"
         class="block w-full border-gray-300 rounded-md focus:ring-indigo-200 focus:border-indigo-200 sm:text-sm sm:leading-5"
         name="filter"
@@ -124,5 +125,5 @@
     />
   <% end %>
 
-  <%= no_goals_shown_message(assigns) %>
+  <.no_goals_shown_message goals={@goals} user={@user} filtered_goals={@filtered_goals} />
 </article>

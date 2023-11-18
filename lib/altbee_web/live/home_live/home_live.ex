@@ -106,6 +106,10 @@ defmodule AltbeeWeb.HomeLive do
     |> :unicode.characters_to_nfkd_binary()
   end
 
+  attr :goals, :list, required: true
+  attr :filtered_goals, :list, required: true
+  attr :user, Accounts.User, required: true
+
   def no_goals_shown_message(%{goals: [], user: %{goals: []}} = assigns) do
     ~H"""
     <.live_component
@@ -143,13 +147,13 @@ defmodule AltbeeWeb.HomeLive do
     """
   end
 
-  def no_goals_shown_message(_assigns), do: nil
+  def no_goals_shown_message(assigns), do: ~H""
 
   def handle_info({:goal, goal}, socket) do
     goals =
       socket.assigns.goals
       |> Enum.filter(&(&1["slug"] !== goal["slug"]))
-      |> (&[goal | &1]).()
+      |> then(&[goal | &1])
       |> sort_goals()
 
     socket =
