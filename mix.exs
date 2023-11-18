@@ -32,15 +32,15 @@ defmodule Altbee.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, github: "phoenixframework/phoenix", override: true},
+      {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      # TODO bump to 0.18 on release
-      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view", override: true},
-      {:phoenix_live_dashboard, "~> 0.6"},
+      {:phoenix_live_view, "~> 0.20"},
+      {:phoenix_view, "~> 2.0"},
+      {:phoenix_live_dashboard, "~> 0.8"},
       {:esbuild, "~> 0.5", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},
@@ -60,8 +60,9 @@ defmodule Altbee.MixProject do
       {:bagg,
        github: "quantified-self-tools/bagg", ref: "bc33816682ea26ba9d13173140841c1db164fc23"},
       {:floki, "~> 0.31"},
-      {:html5ever, "~> 0.13.0"},
-      {:remote_ip, "~> 1.0"}
+      {:html5ever, "~> 0.15.0"},
+      {:remote_ip, "~> 1.0"},
+      {:statistics, "~> 0.6.2"}
     ]
   end
 

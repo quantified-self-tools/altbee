@@ -1,5 +1,6 @@
 defmodule AltbeeWeb.LiveHelpers do
   import Phoenix.LiveView
+  import Phoenix.Component
 
   alias AltbeeWeb.Router.Helpers, as: Routes
 
