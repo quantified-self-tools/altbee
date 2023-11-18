@@ -1,7 +1,7 @@
 <div class="divide-y divide-gray-300">
   <%= for datapoint <- @datapoints do %>
     <form
-      id={"datapoint-#{datapoint["id"]["$oid"]}"}
+      id={"datapoint-#{datapoint["id"]}"}
       class="flex flex-col items-center py-4 md:flex-row space-y-3 md:space-y-0"
       phx-submit="update-datapoint"
       x-data="{show: true, confirmDelete: false}"
@@ -15,7 +15,7 @@
       autocomplete="no"
       title={datapoint["fulltext"]}
     >
-      <input type="hidden" name="datapoint-id" value={datapoint["id"]["$oid"]} />
+      <input type="hidden" name="datapoint-id" value={datapoint["id"]} />
 
       <div class="flex">
         <input
@@ -69,7 +69,7 @@
           <div x-show="confirmDelete" x-cloak>
             <.live_component
               module={ConfirmDatapointDeleteComponent}
-              id={"confirm-delete-datapoint-#{datapoint["id"]["$oid"]}"}
+              id={"confirm-delete-datapoint-#{datapoint["id"]}"}
               datapoint={datapoint}
             />
           </div>

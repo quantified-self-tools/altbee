@@ -60,7 +60,7 @@
             class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md leading-6 shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring ring-red-200 ring-opacity-50 transition ease-in-out duration-200 sm:text-sm sm:leading-5"
             @click="confirmDelete = false; show = false"
             phx-click="delete-datapoint"
-            phx-value-datapoint-id={@datapoint["id"]["$oid"]}
+            phx-value-datapoint-id={@datapoint["id"]}
           >
             Delete
           </button>
