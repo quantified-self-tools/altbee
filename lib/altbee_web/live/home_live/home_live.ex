@@ -23,13 +23,19 @@ defmodule AltbeeWeb.HomeLive do
         socket
         |> assign(:goals, goals_from_cache)
         |> assign(:tags, tags_from_cache)
-        |> assign(:filters, [])
         |> assign(:goal_groups, Goals.load_groups(user))
-        |> recalculate_filters()
         |> assign(:page_title, "Goals")
       end)
 
     {:ok, socket}
+  end
+
+  def handle_params(params, _, socket) do
+    socket =
+      socket
+      |> assign_filter(Map.get(params, "search", ""))
+
+    {:noreply, socket}
   end
 
   defp filter_goals(goals, tags, filters) do
@@ -54,15 +60,11 @@ defmodule AltbeeWeb.HomeLive do
   end
 
   def handle_event("filter-changed", %{"filter" => filter}, socket) do
-    filters =
-      filter
-      |> String.split()
-      |> Enum.map(&normalize_string/1)
+    query = if filter == "", do: [], else: [search: filter]
 
     socket =
       socket
-      |> assign(:filters, filters)
-      |> recalculate_filters()
+      |> push_patch(to: Routes.home_path(socket, :index, query))
 
     {:noreply, socket}
   end
@@ -85,8 +87,7 @@ defmodule AltbeeWeb.HomeLive do
     socket =
       socket
       |> assign(:goals, [])
-      |> assign(:filters, [])
-      |> recalculate_filters()
+      |> push_patch(to: Routes.home_path(socket, :index))
 
     {:noreply, socket}
   end
@@ -272,5 +273,17 @@ defmodule AltbeeWeb.HomeLive do
        end)}
 
     [main_group | groups]
+  end
+
+  defp assign_filter(socket, filter) do
+    filters =
+      filter
+      |> String.split()
+      |> Enum.map(&normalize_string/1)
+
+    socket
+    |> assign(:search_term, filter)
+    |> assign(:filters, filters)
+    |> recalculate_filters()
   end
 end
