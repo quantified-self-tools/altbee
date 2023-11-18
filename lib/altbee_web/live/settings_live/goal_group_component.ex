@@ -38,6 +38,8 @@ defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
     """
   end
 
+  attr :error, :string, required: true
+
   def error_msg(assigns) do
     ~H"""
     <span class="inline-block ml-3 text-red-700 truncate">
@@ -45,6 +47,10 @@ defmodule AltbeeWeb.SettingsLive.GoalGroupComponent do
     </span>
     """
   end
+
+  attr :id, :string, required: true
+  attr :group_name, :string, required: true
+  attr :editing, :boolean, required: true
 
   def name(%{editing: true} = assigns) do
     ~H"""
