@@ -64,10 +64,15 @@
                 <%= if @num_new_tags > 0 do %>
                   <%= for ix <- 0..(@num_new_tags - 1) do %>
                     <li class="my-1 ml-2">
-                      <select class="rounded-sm" name="tags[]">
-                        <option value="">&mdash;</option>
+                      <select class="rounded-sm" name="tags[]" id={"#{@id}-tag-select-#{ix}"}>
+                        <option id={"#{@id}-tag-select-#{ix}-empty"} value="">&mdash;</option>
                         <%= for tag_option <- @tags do %>
-                          <option value={tag_option}><%= tag_option %></option>
+                          <option
+                            id={"#{@id}-tag-select-#{ix}-option-#{tag_option}"}
+                            value={tag_option}
+                          >
+                            <%= tag_option %>
+                          </option>
                         <% end %>
                       </select>
                     </li>
