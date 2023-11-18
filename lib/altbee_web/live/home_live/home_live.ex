@@ -42,12 +42,13 @@ defmodule AltbeeWeb.HomeLive do
     goals
     |> Enum.filter(fn goal ->
       fields =
-        [
-          normalize_string(goal["slug"]),
-          normalize_string(goal["title"]),
-          normalize_string(goal["gunits"]),
+        ([
+          goal["slug"],
+          goal["title"],
+          goal["gunits"],
           to_string(goal_color(goal["safebuf"]))
-        ] ++ Map.get(tags, goal["slug"], [])
+        ] ++ Map.get(tags, goal["slug"], []))
+        |> Enum.map(&normalize_string/1)
 
       filters
       |> Enum.all?(fn filter ->
